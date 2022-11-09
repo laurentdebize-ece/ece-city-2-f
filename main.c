@@ -14,8 +14,8 @@
 #define NB_COLONNES_MAX 45
 #define HAUTEUR 20
 #define LARGEUR 20
-#define HAUTEUR_PLATEAU 950
-#define LARGEUR_PLATEAU 1024
+#define HAUTEUR_PLATEAU 1080
+#define LARGEUR_PLATEAU 1920
 
 
 typedef struct {
@@ -84,6 +84,16 @@ void afficherDate(){
     }
 }
 
+void afficherToolBox(ALLEGRO_FONT* text, ALLEGRO_BITMAP* water, ALLEGRO_BITMAP* argent, ALLEGRO_BITMAP * habitant, ALLEGRO_BITMAP* elec, Info info){
+    al_draw_scaled_bitmap(argent, 0, 0, al_get_bitmap_width(argent), al_get_bitmap_height(argent), 1000, 30, 40, 40, 0);
+    al_draw_scaled_bitmap(elec, 0, 0, al_get_bitmap_width(elec), al_get_bitmap_height(elec), 800, 30, 40, 40, 0);
+    al_draw_scaled_bitmap(habitant, 0, 0, al_get_bitmap_width(habitant), al_get_bitmap_height(habitant), 600, 30, 40, 40, 0);
+    al_draw_scaled_bitmap(water, 0, 0, al_get_bitmap_width(water), al_get_bitmap_height(water), 400, 30, 40, 40, 0);
+
+    al_draw_textf(text, al_map_rgb(255,255,255), 800, 40, 0,": %d",info.argent);
+}
+
+
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
@@ -100,14 +110,15 @@ bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {
 }
 
 void menud(ALLEGRO_BITMAP *fond) {
-    fond = al_load_bitmap("../VF Fond - Copie.png");
+    fond = al_load_bitmap("../VF_Fond.png");
     al_draw_bitmap(fond, 0, 0, 0);
     al_flip_display();
 }
 
 void plateau(ALLEGRO_BITMAP *fplateau){
-    fplateau = al_load_bitmap("../fond jeu.jpg");
+    fplateau = al_load_bitmap("../fond_jeu.jpg");
     al_draw_bitmap(fplateau,0,0,0);
+    al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, al_map_rgb(50, 50, 50));
     al_flip_display();
 }
 
@@ -125,10 +136,15 @@ int main() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
-    ALLEGRO_BITMAP *fond = NULL;
+    ALLEGRO_BITMAP *fond, *argent, *elec, *habitant, *eau = NULL;
     ALLEGRO_BITMAP *fplateau = NULL;
     ALLEGRO_FONT *text;
-    text = al_load_ttf_font("../calibri.ttf", 50, 0);
+    argent = al_load_bitmap("../argent.png");
+    if(!argent){printf("erreur load argent");}
+    elec = al_load_bitmap("../Electricite.png");
+    habitant = al_load_bitmap("../people.png");
+    eau = al_load_bitmap("../water.png");
+    text = al_load_ttf_font("../calibri.ttf", 30, 0);
     if(!text){
         printf("erreur");
     }
@@ -165,12 +181,12 @@ int main() {
                     break;
                 }
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
-                    if (isInRect(event.mouse.x, event.mouse.y, 57, 687, 435, 791)) {
+                    if (isInRect(event.mouse.x, event.mouse.y, 207, 809, 800, 960)) {
                         menu = true;
                         mode = 0;
                     }
 
-                    if (isInRect(event.mouse.x, event.mouse.y, 597, 679, 931, 800)) {
+                    if (isInRect(event.mouse.x, event.mouse.y, 1111, 809, 1705, 960)) {
                         menu = true;
                         mode = 1;
                     }
@@ -181,9 +197,9 @@ int main() {
         plateau(fplateau);
         initCases(cases);
         dessinerCases(cases);
+        afficherToolBox(text, eau, argent, habitant, elec, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
-            al_draw_textf(text, al_map_rgb(255,255,255), 140, 40, 0,": %d",info.argent);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
