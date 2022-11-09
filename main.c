@@ -15,6 +15,7 @@
 #define GRIS_FONCE al_map_rgb(25, 25, 25)
 #define GRIS_CLAIR al_map_rgb(50, 50, 50)
 #define BLANC al_map_rgb(255, 255, 255)
+#define NOIR al_map_rgb(0,0,0)
 
 
 typedef struct {
@@ -168,10 +169,14 @@ int main() {
     assert(queue != NULL);
     int mode;
     timer = al_create_timer(1.0 / 60.0);
+    al_start_timer(timer);
     assert(timer != NULL);
     bool fin = false;
     bool menu = false;
     bool jeu = false;
+    int l = 0;
+    int k = 1;
+    int y = 2022;
     display = al_create_display(LARGEUR_PLATEAU, HAUTEUR_PLATEAU);
     assert(display != NULL);
     al_register_event_source(queue, al_get_display_event_source(display));
@@ -216,6 +221,8 @@ int main() {
         afficherToolBox(text, eau, argent, habitant, elec, setting, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
+            al_draw_filled_rectangle(100,0,300,100,NOIR);
+            al_draw_textf(text, BLANC, 110, 35, 0,"%d/%d",k,y);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
@@ -225,6 +232,16 @@ int main() {
                 case ALLEGRO_EVENT_DISPLAY_RESIZE: {
                     al_flip_display();
                     break;
+                }
+                case ALLEGRO_EVENT_TIMER:{
+                    l = l +1;
+                    if(l == 900){
+                        l = 0;
+                        k = k + 1;
+                        if(k == 13){
+                            k = 0;
+                        }
+                    }
                 }
             }
         }
