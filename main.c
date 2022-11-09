@@ -5,10 +5,6 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <stdlib.h>
-#include <allegro5/allegro_native_dialog.h>
-#include <time.h>
-#include <allegro5\allegro_acodec.h>
-#include <allegro5\allegro_audio.h>
 
 #define NB_LIGNES_MAX 35
 #define NB_COLONNES_MAX 45
@@ -16,6 +12,9 @@
 #define LARGEUR 20
 #define HAUTEUR_PLATEAU 1080
 #define LARGEUR_PLATEAU 1920
+#define GRIS_FONCE al_map_rgb(25, 25, 25)
+#define GRIS_CLAIR al_map_rgb(50, 50, 50)
+#define BLANC al_map_rgb(255, 255, 255)
 
 
 typedef struct {
@@ -34,10 +33,10 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
         for (j = 0; j < NB_COLONNES_MAX; j++) {
-            cases[i][j].largeur = 20;
-            cases[i][j].hauteur = 20;
-            cases[i][j].x = 20 + j * cases[i][j].largeur;
-            cases[i][j].y = 20 + i * cases[i][j].hauteur;
+            cases[i][j].largeur = 25;
+            cases[i][j].hauteur = 25;
+            cases[i][j].x = 25+ j * cases[i][j].largeur;
+            cases[i][j].y = 25 + i * cases[i][j].hauteur;
             cases[i][j].couleur = al_map_rgb(255, 255, 255);
         }
     }
@@ -84,13 +83,28 @@ void afficherDate(){
     }
 }
 
-void afficherToolBox(ALLEGRO_FONT* text, ALLEGRO_BITMAP* water, ALLEGRO_BITMAP* argent, ALLEGRO_BITMAP * habitant, ALLEGRO_BITMAP* elec, Info info){
-    al_draw_scaled_bitmap(argent, 0, 0, al_get_bitmap_width(argent), al_get_bitmap_height(argent), 1000, 30, 40, 40, 0);
-    al_draw_scaled_bitmap(elec, 0, 0, al_get_bitmap_width(elec), al_get_bitmap_height(elec), 800, 30, 40, 40, 0);
-    al_draw_scaled_bitmap(habitant, 0, 0, al_get_bitmap_width(habitant), al_get_bitmap_height(habitant), 600, 30, 40, 40, 0);
-    al_draw_scaled_bitmap(water, 0, 0, al_get_bitmap_width(water), al_get_bitmap_height(water), 400, 30, 40, 40, 0);
+void afficherToolBox(ALLEGRO_FONT* text, ALLEGRO_BITMAP* water, ALLEGRO_BITMAP* argent, ALLEGRO_BITMAP * habitant, ALLEGRO_BITMAP* elec, ALLEGRO_BITMAP* setting, Info info){
+    al_draw_scaled_bitmap(argent, 0, 0, al_get_bitmap_width(argent), al_get_bitmap_height(argent), 1450, 17, 60, 60, 0);
+    al_draw_scaled_bitmap(elec, 0, 0, al_get_bitmap_width(elec), al_get_bitmap_height(elec), 1200, 17, 60, 60, 0);
+    al_draw_scaled_bitmap(water, 0, 0, al_get_bitmap_width(water), al_get_bitmap_height(water), 950, 17, 60, 60, 0);
+    al_draw_scaled_bitmap(habitant, 0, 0, al_get_bitmap_width(habitant), al_get_bitmap_height(habitant), 700, 17, 60, 60, 0);
 
-    al_draw_textf(text, al_map_rgb(255,255,255), 800, 40, 0,": %d",info.argent);
+    al_draw_textf(text, BLANC, 1520, 35, 0,": %d",info.argent);
+    al_draw_textf(text, BLANC, 1270, 35, 0,": %d",info.elec);
+    al_draw_textf(text, BLANC, 1020, 35, 0,": %d",info.eau);
+    al_draw_textf(text, BLANC, 770, 35, 0,": %d",info.nbhabitant);
+
+    al_draw_filled_circle(40, 40, 30, al_map_rgb(50, 50, 50));
+    al_draw_scaled_bitmap(setting, 0, 0, al_get_bitmap_width(setting), al_get_bitmap_height(setting), 15, 15, 50, 50, 0);
+
+    al_draw_filled_circle(120, 200, 90, GRIS_CLAIR);
+    al_draw_filled_circle(330, 200, 90, GRIS_CLAIR);
+    al_draw_filled_circle(120, 400, 90, GRIS_CLAIR);
+    al_draw_filled_circle(330, 400, 90, GRIS_CLAIR);
+    al_draw_filled_circle(120, 600, 90, GRIS_CLAIR);
+    al_draw_filled_circle(330, 600, 90, GRIS_CLAIR);
+    al_draw_filled_circle(120, 800, 90, GRIS_CLAIR);
+    al_draw_filled_circle(330, 800, 90, GRIS_CLAIR);
 }
 
 
@@ -98,8 +112,8 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
         for (j = 0; j < NB_COLONNES_MAX; j++) {
-            al_draw_rectangle(cases[i][j].x+100, cases[i][j].y +150, cases[i][j].x + cases[i][j].largeur+100,
-                              cases[i][j].y+150 + cases[i][j].hauteur, cases[i][j].couleur, 1);
+            al_draw_rectangle(cases[i][j].x+600, cases[i][j].y +120, cases[i][j].x + cases[i][j].largeur+600,
+                              cases[i][j].y+120 + cases[i][j].hauteur, cases[i][j].couleur, 1);
         }
     }
     al_flip_display();
@@ -119,6 +133,7 @@ void plateau(ALLEGRO_BITMAP *fplateau){
     fplateau = al_load_bitmap("../fond_jeu.jpg");
     al_draw_bitmap(fplateau,0,0,0);
     al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, al_map_rgb(50, 50, 50));
+    al_draw_filled_rectangle(0, 0, 450, HAUTEUR_PLATEAU, al_map_rgb(25, 25, 25));
     al_flip_display();
 }
 
@@ -136,7 +151,7 @@ int main() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
-    ALLEGRO_BITMAP *fond, *argent, *elec, *habitant, *eau = NULL;
+    ALLEGRO_BITMAP *fond, *argent, *elec, *habitant, *eau, *setting = NULL;
     ALLEGRO_BITMAP *fplateau = NULL;
     ALLEGRO_FONT *text;
     argent = al_load_bitmap("../argent.png");
@@ -144,6 +159,7 @@ int main() {
     elec = al_load_bitmap("../Electricite.png");
     habitant = al_load_bitmap("../people.png");
     eau = al_load_bitmap("../water.png");
+    setting = al_load_bitmap("../settings.png");
     text = al_load_ttf_font("../calibri.ttf", 30, 0);
     if(!text){
         printf("erreur");
@@ -197,7 +213,7 @@ int main() {
         plateau(fplateau);
         initCases(cases);
         dessinerCases(cases);
-        afficherToolBox(text, eau, argent, habitant, elec, info);
+        afficherToolBox(text, eau, argent, habitant, elec, setting, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
             al_flip_display();
