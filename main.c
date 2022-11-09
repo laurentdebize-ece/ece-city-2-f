@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
-#include<allegro5/allegro_primitives.h>
-#include<allegro5/allegro_font.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_native_dialog.h>
 #include <stdlib.h>
+#include <allegro5/allegro_native_dialog.h>
 #include <time.h>
 #include <allegro5\allegro_acodec.h>
 #include <allegro5\allegro_audio.h>
@@ -23,6 +23,13 @@ typedef struct {
     ALLEGRO_COLOR couleur;
 } Case;
 
+typedef struct{
+    int argent;
+    int elec;
+    int eau;
+    int nbhabitant;
+}Info;
+
 void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
@@ -36,14 +43,46 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     }
 }
 
+void afficherDate(){
+    ALLEGRO_TIMER *timer = NULL;
+    ALLEGRO_FONT *text2;
+    ALLEGRO_EVENT_QUEUE *queue;
+    ALLEGRO_EVENT event;
+    assert(al_init());
+    assert(al_install_keyboard());
+    al_init_font_addon();
+    assert(al_init_ttf_addon());
+    assert(al_init_image_addon());
+    queue = al_create_event_queue();
+    bool temps = false;
+    int  i = 0;
+    timer = al_create_timer(1.0 / 10.0);
+    al_register_event_source(queue, al_get_keyboard_event_source());
+    al_register_event_source(queue, al_get_timer_event_source(timer));
+    while (!temps) {
+        al_wait_for_event(queue, &event);
+        switch (event.type) {
+            case ALLEGRO_EVENT_TIMER: {
+                i = i +1;
+
+
+
+
+            }
+        }
+
+    }
+}
+
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
         for (j = 0; j < NB_COLONNES_MAX; j++) {
-            al_draw_rectangle(cases[i][j].x, cases[i][j].y, cases[i][j].x + cases[i][j].largeur,
-                              cases[i][j].y + cases[i][j].hauteur, cases[i][j].couleur, 1);
+            al_draw_rectangle(cases[i][j].x+100, cases[i][j].y +150, cases[i][j].x + cases[i][j].largeur+100,
+                              cases[i][j].y+150 + cases[i][j].hauteur, cases[i][j].couleur, 1);
         }
     }
+    al_flip_display();
 }
 
 bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {
@@ -56,16 +95,33 @@ void menud(ALLEGRO_BITMAP *fond) {
     al_flip_display();
 }
 
+void plateau(ALLEGRO_BITMAP *fplateau){
+    fplateau = al_load_bitmap("../fond jeu.jpg");
+    al_draw_bitmap(fplateau,0,0,0);
+    al_flip_display();
+}
+
 int main() {
     assert (al_init());
     assert(al_init_primitives_addon());
     assert(al_init_image_addon());
     assert(al_install_mouse());
+    al_init_font_addon();
+    al_init_ttf_addon();
+    assert(al_init_ttf_addon());
+    if(!al_init_ttf_addon())
+        printf("al_init_ttf_addon()");
     ALLEGRO_DISPLAY *display;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
     ALLEGRO_BITMAP *fond = NULL;
+    ALLEGRO_BITMAP *fplateau = NULL;
+    ALLEGRO_FONT *text;
+    text = al_load_ttf_font("../calibri.ttf", 50, 0);
+    if(!text){
+        printf("erreur");
+    }
     queue = al_create_event_queue();
     assert(queue != NULL);
     int mode;
@@ -80,8 +136,10 @@ int main() {
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
     al_set_window_title(display, "ECE City");
-    al_set_window_position(display, 10, 10);
+    al_set_window_position(display, 0, 0);
     Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX];
+    Info info;
+    info.argent = 500000;
     menud(fond);
     while (!fin) {
         al_wait_for_event(queue, &event);
@@ -96,8 +154,8 @@ int main() {
                     al_flip_display();
                     break;
                 }
-                case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN : {
-                    if (isInRect(event.mouse.x, event.mouse.y, 97, 687, 435, 791)) {
+                case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
+                    if (isInRect(event.mouse.x, event.mouse.y, 57, 687, 435, 791)) {
                         menu = true;
                         mode = 0;
                     }
@@ -110,11 +168,12 @@ int main() {
                 }
             }
         }
+        plateau(fplateau);
+        initCases(cases);
+        dessinerCases(cases);
         while (!jeu) {
             al_wait_for_event(queue, &event);
-            al_clear_to_color(al_map_rgb(0,0,0));
-            initCases(cases);
-            dessinerCases(cases);
+            al_draw_textf(text, al_map_rgb(255,255,255), 140, 40, 0,": %d",info.argent);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
