@@ -55,7 +55,9 @@ void afficherDate(){
     assert(al_init_image_addon());
     queue = al_create_event_queue();
     bool temps = false;
-    int  i = 0;
+    int l = 0;
+    int k = 0;
+    int y = 2022;
     timer = al_create_timer(1.0 / 10.0);
     al_register_event_source(queue, al_get_keyboard_event_source());
     al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -63,7 +65,14 @@ void afficherDate(){
         al_wait_for_event(queue, &event);
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: {
-                i = i +1;
+                l = l +1;
+                if(l == 150){
+                    l = 0;
+                    k = k + 1;
+                    if(k == 11){
+                        k = 0;
+                    }
+                }
 
 
 
