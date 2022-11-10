@@ -204,10 +204,8 @@ int main() {
 
     Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX];
     Info info;
-
     info.argent = 500000;
     menud(fond);
-
     while (!fin) {
         al_wait_for_event(queue, &event);
         while (!menu) {
@@ -241,8 +239,6 @@ int main() {
         afficherToolBox(text, eau, argent, habitant, elec, setting, cabane, watercastle, usine, route, caserne, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
-            al_draw_filled_rectangle(100,0,300,100,NOIR);
-            al_draw_textf(text, BLANC, 110, 35, 0,"%d/%d",k,y);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
@@ -252,16 +248,6 @@ int main() {
                 case ALLEGRO_EVENT_DISPLAY_RESIZE: {
                     al_flip_display();
                     break;
-                }
-                case ALLEGRO_EVENT_TIMER:{
-                    l = l +1;
-                    if(l == 900){
-                        l = 0;
-                        k = k + 1;
-                        if(k == 13){
-                            k = 0;
-                        }
-                    }
                 }
             }
         }
