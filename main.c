@@ -15,6 +15,7 @@
 #define GRIS_FONCE al_map_rgb(25, 25, 25)
 #define GRIS_CLAIR al_map_rgb(50, 50, 50)
 #define BLANC al_map_rgb(255, 255, 255)
+#define NOIR al_map_rgb(0,0,0)
 
 
 typedef struct {
@@ -108,14 +109,6 @@ void afficherToolBox(ALLEGRO_FONT* text, ALLEGRO_BITMAP* water, ALLEGRO_BITMAP* 
     al_draw_filled_circle(330, 600, 90, GRIS_CLAIR);
     al_draw_filled_circle(120, 800, 90, GRIS_CLAIR);
     al_draw_filled_circle(330, 800, 90, GRIS_CLAIR);
-
-    al_draw_scaled_bitmap(route, 0, 0, al_get_bitmap_width(route), al_get_bitmap_height(route), 50, 125, 130, 130, 0);
-    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane), al_get_bitmap_height(cabane), 245, 110, 160, 160, 0);
-    al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle), al_get_bitmap_height(watercastle), 30, 310, 180, 180, 0);
-    al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine), al_get_bitmap_height(usine), 260, 330, 130, 130, 0);
-    al_draw_scaled_bitmap(caserne, 0, 0, al_get_bitmap_width(caserne), al_get_bitmap_height(caserne), 55, 517, 130, 130, 0);
-
-    al_flip_display();
 }
 
 
@@ -187,6 +180,7 @@ int main() {
     queue = al_create_event_queue();
     assert(queue != NULL);
     timer = al_create_timer(1.0 / 60.0);
+    al_start_timer(timer);
     assert(timer != NULL);
     display = al_create_display(LARGEUR_PLATEAU, HAUTEUR_PLATEAU);
     assert(display != NULL);
@@ -195,6 +189,11 @@ int main() {
     bool fin = false;
     bool menu = false;
     bool jeu = false;
+    int l = 0;
+    int k = 1;
+    int y = 2022;
+    display = al_create_display(LARGEUR_PLATEAU, HAUTEUR_PLATEAU);
+    assert(display != NULL);
 
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -242,6 +241,8 @@ int main() {
         afficherToolBox(text, eau, argent, habitant, elec, setting, cabane, watercastle, usine, route, caserne, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
+            al_draw_filled_rectangle(100,0,300,100,NOIR);
+            al_draw_textf(text, BLANC, 110, 35, 0,"%d/%d",k,y);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
@@ -251,6 +252,16 @@ int main() {
                 case ALLEGRO_EVENT_DISPLAY_RESIZE: {
                     al_flip_display();
                     break;
+                }
+                case ALLEGRO_EVENT_TIMER:{
+                    l = l +1;
+                    if(l == 900){
+                        l = 0;
+                        k = k + 1;
+                        if(k == 13){
+                            k = 0;
+                        }
+                    }
                 }
             }
         }
