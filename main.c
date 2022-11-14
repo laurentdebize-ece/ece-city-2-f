@@ -66,18 +66,13 @@ void afficherDate(){
         switch (event.type) {
             case ALLEGRO_EVENT_TIMER: {
                 l = l +1;
-                if(l == 150){
+                if(l == 900){
                     l = 0;
                     k = k + 1;
-                    if(k == 11){
+                    if(k == 13){
                         k = 0;
                     }
                 }
-
-
-
-
-
             }
         }
 
@@ -132,11 +127,21 @@ void menud(ALLEGRO_BITMAP *fond) {
     al_flip_display();
 }
 
-void plateau(ALLEGRO_BITMAP *fplateau){
-    al_draw_bitmap(fplateau,0,0,0);
+void plateau(ALLEGRO_BITMAP *fplateau, ALLEGRO_FONT* text){
+    int niveau = 0;
+    if(niveau == 0){
+        al_draw_bitmap(fplateau,0,0,0);
+    }
+    if(niveau == -1){
+        al_clear_to_color(al_map_rgb(0,0,255));
+    }
+    if(niveau == -2){
+        al_clear_to_color(al_map_rgb(0,255,0));
+    }
     al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, al_map_rgb(25, 25, 25));
     al_draw_filled_rectangle(600, 10, 1700, 80, al_map_rgb(50, 50, 50));
     al_draw_filled_rectangle(0, 0, 450, HAUTEUR_PLATEAU, al_map_rgb(25, 25, 25));
+    al_draw_textf(text,BLANC,240,30,0,"Niveau : %d",niveau);
     al_flip_display();
 }
 
@@ -150,7 +155,6 @@ int main() {
     assert(al_init_ttf_addon());
     if(!al_init_ttf_addon())
         printf("al_init_ttf_addon()");
-
     ALLEGRO_DISPLAY *display;
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
@@ -158,7 +162,6 @@ int main() {
     ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text;
-
     argent = al_load_bitmap("../Images/argent.png");
     elec = al_load_bitmap("../Images/Electricite.png");
     habitant = al_load_bitmap("../Images/people.png");
@@ -171,7 +174,6 @@ int main() {
     usine = al_load_bitmap("../Images/usine.png");
     route = al_load_bitmap("../Images/route.png");
     caserne = al_load_bitmap("../Images/caserne.png");
-
     text = al_load_ttf_font("../Fonts/calibri.ttf", 30, 0);
     if(!text){
         printf("erreur");
@@ -190,8 +192,8 @@ int main() {
     bool menu = false;
     bool jeu = false;
     int l = 0;
-    int k = 1;
-    int y = 2022;
+    int mois = 1;
+    int annee = 2022;
     display = al_create_display(LARGEUR_PLATEAU, HAUTEUR_PLATEAU);
     assert(display != NULL);
 
@@ -233,12 +235,14 @@ int main() {
                 }
             }
         }
-        plateau(fplateau);
+        plateau(fplateau, text);
         initCases(cases);
         dessinerCases(cases);
         afficherToolBox(text, eau, argent, habitant, elec, setting, cabane, watercastle, usine, route, caserne, info);
         while (!jeu) {
             al_wait_for_event(queue, &event);
+            al_draw_filled_rectangle(95,0,205,70,GRIS_CLAIR);
+            al_draw_textf(text, al_map_rgb(255,255,255),100,30,0,"%d/%d",mois,annee);
             al_flip_display();
             switch (event.type) {
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
@@ -249,6 +253,19 @@ int main() {
                     al_flip_display();
                     break;
                 }
+                case ALLEGRO_EVENT_TIMER: {
+                    l = l +1;
+                    if(l == 900){
+                        l = 0;
+                        mois = mois + 1;
+                        if(mois == 13){
+                            mois = 1;
+                            annee = annee + 1;
+                        }
+                    }
+                break;
+                }
+
             }
         }
         al_destroy_display(display);
