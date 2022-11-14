@@ -3,9 +3,9 @@ project(ece_city_2_f C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(ece_city_2_f main.c)
 
 
+add_executable(ece_city_2_f main.c menu.c menu.h routes.c routes.h)
 
 
 IF(WIN32)
