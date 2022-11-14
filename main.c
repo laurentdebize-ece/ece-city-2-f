@@ -276,7 +276,7 @@ int main() {
     assert(timer != NULL);
     display = al_create_display(LARGEUR_PLATEAU, HAUTEUR_PLATEAU);
     assert(display != NULL);
-
+    al_start_timer(timer);
     int mode;
     bool fin = false;
     bool menu = false;
@@ -465,6 +465,20 @@ int main() {
                     case ALLEGRO_EVENT_DISPLAY_CLOSE: {
                         jeu = true;
                         break;
+                    }
+                    case ALLEGRO_EVENT_TIMER:{
+                        l = l + 1;
+                        if (l == 900) {
+                            l = 0;
+                            k = k + 1;
+                            if (k == 13) {
+                                k = 1;
+                                y = y + 1;
+                            }
+                        }
+                        al_draw_textf(text,BLANC,250,30,0,":%d/%d",k,y);
+                        al_flip_display();
+
                     }
                 }
             }
