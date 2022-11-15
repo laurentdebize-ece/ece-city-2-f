@@ -1,40 +1,7 @@
 #include "menu.h"
 
-
-void afficherDate() {
-    ALLEGRO_TIMER *timer = NULL;
-    ALLEGRO_FONT *text2;
-    ALLEGRO_EVENT_QUEUE *queue;
-    ALLEGRO_EVENT event;
-    assert(al_init());
-    assert(al_install_keyboard());
-    al_init_font_addon();
-    assert(al_init_ttf_addon());
-    assert(al_init_image_addon());
-    queue = al_create_event_queue();
-    bool temps = false;
-    int l = 0;
-    int k = 0;
-    int y = 2022;
-    timer = al_create_timer(1.0 / 10.0);
-    al_register_event_source(queue, al_get_keyboard_event_source());
-    al_register_event_source(queue, al_get_timer_event_source(timer));
-    while (!temps) {
-        al_wait_for_event(queue, &event);
-        switch (event.type) {
-            case ALLEGRO_EVENT_TIMER: {
-                l = l + 1;
-                if (l == 150) {
-                    l = 0;
-                    k = k + 1;
-                    if (k == 11) {
-                        k = 0;
-                    }
-                }
-            }
-        }
-
-    }
+bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {
+    return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
 }
 
 void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
