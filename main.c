@@ -1,6 +1,8 @@
 #include "menu.h"
 #include "routes.h"
 #include "maison.h"
+#include "chateauEau.h"
+#include "usine.h"
 
 
 int main() {
@@ -116,7 +118,7 @@ int main() {
             }
         }
         al_clear_to_color(BLANC);
-        //plateau(fplateau);
+        plateau(fplateau);
         initCases(cases);
         dessinerCases(cases);
         afficherRessources(info, text, eau, argent, habitant, elec);
@@ -131,6 +133,12 @@ int main() {
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
                         dessinerMaisons(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 53, 333, 187, 467)){
+                        dessinerChateauEau(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 263, 333, 397, 467)){
+                        dessinerUsines(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
                     }
                     break;
                 }
@@ -152,9 +160,11 @@ int main() {
                 }
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
                     jeu = true;
+                    fin = true;
                     break;
                 }
             }
+            al_flush_event_queue(queue);
             al_flip_display();
         }
         al_destroy_display(display);
