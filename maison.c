@@ -18,8 +18,8 @@ void dessinerMaisons(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *t
             case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                 for (int i = 0; i < NB_LIGNES_MAX; ++i) {
                     for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                        if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x, cases[i][j].y,
-                                     cases[i][j].x + HAUTEUR, cases[i][j].y + LARGEUR)) {
+                        if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x + 1, cases[i][j].y + 1,
+                                     cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
                             if (cases[i][j].occupe == 0){
                                 al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                                       al_get_bitmap_height(cabane),
