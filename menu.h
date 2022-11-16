@@ -19,8 +19,8 @@
 #define BLANC al_map_rgb(255, 255, 255)
 #define NOIR al_map_rgb(0,0,0)
 #define VERT al_map_rgb(50,175,0)
-#define BLEU al_map_rgb(0,75,255)
-#define JAUNE al_map_rgb(228,234,0)
+#define BLEU al_map_rgb(181,236,248)
+#define JAUNE al_map_rgb(246,248,181)
 #define GRIS_TRANSPARENT al_map_rgba(50, 50, 50, 50)
 
 typedef struct {

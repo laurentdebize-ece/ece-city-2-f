@@ -42,24 +42,3 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
 }
 
 
-/*if (isInRect(event.mouse.x, event.mouse.y, 56, 746, 400, 820)) {
-                        plateau(fplateau);
-                        dessinerCases(cases);
-                        afficherToolBox(text, textBold, eau, argent, habitant, elec, setting, cabane, watercastle,
-                                        usine, route,
-                                        caserne, info);
-                    }
-                    if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
-                        al_clear_to_color(GRIS_CLAIR);
-                        dessinerCases(cases);
-                        afficherToolBox(text, textBold, eau, argent, habitant, elec, setting, cabane, watercastle,
-                                        usine, route,
-                                        caserne, info);
-                    }
-                    if (isInRect(event.mouse.x, event.mouse.y, 56, 946, 400, 1020)) {
-                        al_clear_to_color(GRIS_FONCE);
-                        dessinerCases(cases);
-                        afficherToolBox(text, textBold, eau, argent, habitant, elec, setting, cabane, watercastle,
-                                        usine, route,
-                                        caserne, info);
-                    }*/
