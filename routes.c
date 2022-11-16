@@ -8,6 +8,7 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
     assert(al_install_mouse());
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_EVENT event;
+    ALLEGRO_MOUSE_STATE mouseState;
     queue = al_create_event_queue();
     al_register_event_source(queue, al_get_mouse_event_source());
     printf("a");
@@ -18,6 +19,7 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
     int caseYActu = -100;
     al_draw_filled_circle(120, 200, 90, GRIS_TRANSPARENT);
     while (!fin) {
+        al_get_mouse_state(&mouseState);
         al_wait_for_event(queue, &event);
         switch (event.type) {
             case ALLEGRO_EVENT_MOUSE_AXES : {
@@ -31,13 +33,12 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
                                 al_draw_filled_rectangle(caseXActu, caseYActu,
                                                          caseXActu + HAUTEUR,
                                                          caseYActu + LARGEUR, NOIR);
-                                if (isInRect(event.mouse.x, event.mouse.y, preCaseX, preCaseY,
-                                             preCaseX + LARGEUR, preCaseY + HAUTEUR)) {
-                                    al_draw_filled_rectangle(preCaseX, preCaseY,
-                                                             preCaseX + HAUTEUR,
-                                                             preCaseY + LARGEUR, NOIR);
+                                if (mouseState.buttons & 1){
+                                    al_draw_filled_rectangle(caseXActu, caseYActu,
+                                                             caseXActu + HAUTEUR,
+                                                             caseYActu + LARGEUR, NOIR);
                                 }
-                                if (preCaseX != cases[i][j].x || preCaseY != cases[i][j].y) {
+                                else if (preCaseX != cases[i][j].x || preCaseY != cases[i][j].y) {
                                     al_draw_filled_rectangle(preCaseX, preCaseY,
                                                              preCaseX + HAUTEUR - 1,
                                                              preCaseY + LARGEUR - 1, BLANC);

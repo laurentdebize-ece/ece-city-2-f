@@ -17,7 +17,7 @@ int main() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
-    ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne = NULL;
+    ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne, *clock = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text, *textBold;
 
@@ -44,6 +44,7 @@ int main() {
     usine = al_load_bitmap("../Images/usine.png");
     route = al_load_bitmap("../Images/route.png");
     caserne = al_load_bitmap("../Images/caserne.png");
+    clock = al_load_bitmap("../Images/clock.png");
 
     text = al_load_ttf_font("../Fonts/calibri.ttf", 30, 0);
     textBold = al_load_ttf_font("../Fonts/calibrib.ttf", 50, 0);
@@ -61,7 +62,7 @@ int main() {
     bool menu = false;
     bool jeu = false;
     bool finRoute = false;
-    bool test = false;
+    bool envoiRoute = false;
     bool finCabane = false;
 
     int l = 0;
@@ -121,11 +122,12 @@ int main() {
         afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
         al_flip_display();
         while (!jeu) {
+            al_flush_event_queue(queue);
             al_wait_for_event(queue, &event);
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP: {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        envoiRoute = true;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
                         al_draw_filled_circle(330, 200, 90, GRIS_TRANSPARENT);
@@ -169,19 +171,37 @@ int main() {
                         }
                     }
                     break;
+                }
+                case ALLEGRO_EVENT_TIMER: {
+                    if (envoiRoute == true){
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        envoiRoute = false;
+                    }
+                    l = l + 1;
+                    if (l == 900) {
+                        l = 0;
+                        k = k + 1;
+                        if (k == 13) {
+                            k = 1;
+                            y = y + 1;
+                        }
+                    }
+                    al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
+                    al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
+                                          al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
+                    al_draw_textf(text, BLANC, 250, 30, 0, ":%d/%d", k, y);
+                    break;
+                }
+                case ALLEGRO_EVENT_DISPLAY_CLOSE: {
+                    jeu = true;
+                    break;
+                }
             }
-            case ALLEGRO_EVENT_DISPLAY_CLOSE: {
-                jeu = true;
-                break;
-            }
+            al_flip_display();
         }
+        al_destroy_display(display);
+        al_destroy_event_queue(queue);
+        al_destroy_timer(timer);
     }
-    al_destroy_display(display);
-    al_destroy_event_queue(queue);
-    al_destroy_timer(timer);
 }
-
-}
-
-
 
