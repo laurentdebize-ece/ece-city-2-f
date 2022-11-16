@@ -127,48 +127,10 @@ int main() {
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                        al_draw_filled_circle(330, 200, 90, GRIS_TRANSPARENT);
-                        while (!finCabane) {
-                            al_wait_for_event(queue, &event);
-                            switch (event.type) {
-                                case ALLEGRO_EVENT_MOUSE_AXES : {
-                                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
-                                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                                            if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x, cases[i][j].y,
-                                                         cases[i][j].x + HAUTEUR, cases[i][j].y + LARGEUR)) {
-                                                caseXActuCabane = cases[i][j].x;
-                                                caseYActuCabane = cases[i][j].y;
-                                                if (cases[i][j].occupe == 0) {
-                                                    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
-                                                                          al_get_bitmap_height(cabane),
-                                                                          cases[i][j].x - LARGEUR,
-                                                                          cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
-
-                                                    if (preCaseXCabane != cases[i][j].x ||
-                                                        preCaseYCabane != cases[i][j].y) {
-                                                        preCaseXCabane = cases[i][j].x;
-                                                        preCaseYCabane = cases[i][j].y;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    break;
-                                }
-                                case ALLEGRO_EVENT_MOUSE_BUTTON_UP: {
-                                    if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                                        afficherToolBox(text, textBold, setting, cabane,
-                                                        watercastle, usine, route, caserne);
-                                        finCabane = true;
-                                    }
-                                    break;
-                                }
-                            }
-                            al_flip_display();
-                        }
+                        dessinerMaisons(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
                     }
                     break;
                 }

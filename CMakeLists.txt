@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 99)
 
 
 
-add_executable(ece_city_2_f main.c menu.c menu.h routes.c routes.h menu.c menu.h)
+add_executable(ece_city_2_f main.c menu.c menu.h routes.c routes.h menu.c menu.h maison.c maison.h)
 
 
 IF(WIN32)
