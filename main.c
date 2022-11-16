@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "routes.h"
+#include "maison.h"
 
 
 int main() {
@@ -22,7 +23,7 @@ int main() {
     ALLEGRO_FONT *text, *textBold;
 
 
-    //routes
+    ///routes
     ALLEGRO_BITMAP *routes, *routeDroite, *routeCote, *virageHaut, *virageBas, *croisementTBas, *croisementQuatres;
     routes = al_load_bitmap("../Images/routes.png");
     routeDroite = al_create_sub_bitmap(routes, 118, 209, 219, 320);
@@ -122,12 +123,11 @@ int main() {
         afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
         al_flip_display();
         while (!jeu) {
-            al_flush_event_queue(queue);
             al_wait_for_event(queue, &event);
             switch (event.type) {
-                case ALLEGRO_EVENT_MOUSE_BUTTON_UP: {
+                case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        envoiRoute = true;
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
                         al_draw_filled_circle(330, 200, 90, GRIS_TRANSPARENT);
@@ -173,10 +173,6 @@ int main() {
                     break;
                 }
                 case ALLEGRO_EVENT_TIMER: {
-                    if (envoiRoute == true){
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
-                        envoiRoute = false;
-                    }
                     l = l + 1;
                     if (l == 900) {
                         l = 0;

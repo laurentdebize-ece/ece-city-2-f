@@ -13,10 +13,6 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
     al_register_event_source(queue, al_get_mouse_event_source());
     printf("a");
     bool fin = false;
-    int preCaseX = -100;
-    int preCaseY = -100;
-    int caseXActu = -100;
-    int caseYActu = -100;
     al_draw_filled_circle(120, 200, 90, GRIS_TRANSPARENT);
     while (!fin) {
         al_get_mouse_state(&mouseState);
@@ -27,31 +23,14 @@ void dessinerRoutes(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
                     for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                         if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x, cases[i][j].y,
                                      cases[i][j].x + HAUTEUR, cases[i][j].y + LARGEUR)) {
-                            caseXActu = cases[i][j].x;
-                            caseYActu = cases[i][j].y;
-                            if (cases[i][j].occupe == 0) {
-                                al_draw_filled_rectangle(caseXActu, caseYActu,
-                                                         caseXActu + HAUTEUR,
-                                                         caseYActu + LARGEUR, NOIR);
-                                if (mouseState.buttons & 1){
-                                    al_draw_filled_rectangle(caseXActu, caseYActu,
-                                                             caseXActu + HAUTEUR,
-                                                             caseYActu + LARGEUR, NOIR);
-                                }
-                                else if (preCaseX != cases[i][j].x || preCaseY != cases[i][j].y) {
-                                    al_draw_filled_rectangle(preCaseX, preCaseY,
-                                                             preCaseX + HAUTEUR - 1,
-                                                             preCaseY + LARGEUR - 1, BLANC);
-                                    preCaseX = cases[i][j].x;
-                                    preCaseY = cases[i][j].y;
-                                }
+                            if (cases[i][j].occupe == 0 && mouseState.buttons & 1) {
+                                al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                                         cases[i][j].x + HAUTEUR,
+                                                         cases[i][j].y + LARGEUR, NOIR);
+                                cases[i][j].occupe = 1;
                             }
                         }
                     }
-                }
-                if (isInRect(event.mouse.x, event.mouse.y, 625, 145, 1750, 1020) == false) {
-                    al_draw_filled_rectangle(preCaseX, preCaseY, preCaseX + HAUTEUR - 1,
-                                             preCaseY + LARGEUR - 1, BLANC);
                 }
                 break;
             }
