@@ -25,11 +25,11 @@ void dessinerUsines(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *te
                                 al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine),
                                                       al_get_bitmap_height(usine),
                                                       cases[i][j].x - 2 * LARGEUR,
-                                                      cases[i][j].y - 6 * HAUTEUR, 100, 150, 0);
-                                cases[i-6][j-2].occupe = 1;
-                                cases[i-6][j-1].occupe = 1;
-                                cases[i-6][j].occupe = 1;
-                                cases[i-6][j+1].occupe = 1;
+                                                      cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
+                                cases[i][j-2].occupe = 1;
+                                cases[i][j-1].occupe = 1;
+                                cases[i][j].occupe = 1;
+                                cases[i][j+1].occupe = 1;
 
                                 cases[i-5][j-2].occupe = 1;
                                 cases[i-5][j-1].occupe = 1;
