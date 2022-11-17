@@ -44,6 +44,10 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
 void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
 void menud(ALLEGRO_BITMAP *fond);
 void plateau(ALLEGRO_BITMAP *fplateau);
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine);
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
+
 
 
 

@@ -145,16 +145,19 @@ int main() {
                         dessinerCases(cases);
                         afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
                         afficherRessources(info, text, eau, argent, habitant, elec);
+                        dessinerBat(cases, cabane, watercastle, usine);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
-                        al_clear_to_color(BLEU);
+                        plateau(fplateau);
                         dessinerCases(cases);
                         afficherToolBox(text, textBold, setting, cabane, watercastle,usine, route,caserne);
+                        dessinerEau(cases);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 946, 400, 1020)) {
-                        al_clear_to_color(JAUNE);
+                        plateau(fplateau);
                         dessinerCases(cases);
                         afficherToolBox(text, textBold, setting, cabane, watercastle,usine, route,caserne);
+                        dessinerElec(cases);
                     }
                     break;
                 }

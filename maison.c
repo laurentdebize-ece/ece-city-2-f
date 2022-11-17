@@ -25,17 +25,17 @@ void dessinerMaisons(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *t
                                                       al_get_bitmap_height(cabane),
                                                       cases[i][j].x - LARGEUR,
                                                       cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
-                                cases[i][j-1].occupe = 1;
-                                cases[i-1][j-1].occupe = 1;
-                                cases[i-2][j-1].occupe = 1;
+                                cases[i][j-1].occupe = 9;
+                                cases[i-1][j-1].occupe = 9;
+                                cases[i-2][j-1].occupe = 9;
 
-                                cases[i][j].occupe = 1;
-                                cases[i-1][j].occupe = 1;
-                                cases[i-2][j].occupe = 1;
+                                cases[i][j].occupe = 2;
+                                cases[i-1][j].occupe = 9;
+                                cases[i-2][j].occupe = 9;
 
-                                cases[i][j+1].occupe = 1;
-                                cases[i-1][j+1].occupe = 1;
-                                cases[i-2][j+1].occupe = 1;
+                                cases[i][j+1].occupe = 9;
+                                cases[i-1][j+1].occupe = 9;
+                                cases[i-2][j+1].occupe = 9;
 
                             }
                         }

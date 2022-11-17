@@ -26,35 +26,35 @@ void dessinerChateauEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT
                                                       al_get_bitmap_height(watercastle),
                                                       cases[i][j].x - 2 * LARGEUR - 10,
                                                       cases[i][j].y - 6 * HAUTEUR + 5, 130, 180, 0);
-                                cases[i][j-2].occupe = 1;
-                                cases[i][j-1].occupe = 1;
-                                cases[i][j].occupe = 1;
-                                cases[i][j+1].occupe = 1;
+                                cases[i-5][j-2].occupe = 9;
+                                cases[i-5][j-1].occupe = 9;
+                                cases[i-5][j].occupe = 9;
+                                cases[i-5][j+1].occupe = 9;
 
-                                cases[i-5][j-2].occupe = 1;
-                                cases[i-5][j-1].occupe = 1;
-                                cases[i-5][j].occupe = 1;
-                                cases[i-5][j+1].occupe = 1;
+                                cases[i-4][j-2].occupe = 9;
+                                cases[i-4][j-1].occupe = 9;
+                                cases[i-4][j].occupe = 9;
+                                cases[i-4][j+1].occupe = 9;
 
-                                cases[i-4][j-2].occupe = 1;
-                                cases[i-4][j-1].occupe = 1;
-                                cases[i-4][j].occupe = 1;
-                                cases[i-4][j+1].occupe = 1;
+                                cases[i-3][j-2].occupe = 9;
+                                cases[i-3][j-1].occupe = 9;
+                                cases[i-3][j].occupe = 9;
+                                cases[i-3][j+1].occupe = 9;
 
-                                cases[i-3][j-2].occupe = 1;
-                                cases[i-3][j-1].occupe = 1;
-                                cases[i-3][j].occupe = 1;
-                                cases[i-3][j+1].occupe = 1;
+                                cases[i-2][j-2].occupe = 9;
+                                cases[i-2][j-1].occupe = 9;
+                                cases[i-2][j].occupe = 9;
+                                cases[i-2][j+1].occupe = 9;
 
-                                cases[i-2][j-2].occupe = 1;
-                                cases[i-2][j-1].occupe = 1;
-                                cases[i-2][j].occupe = 1;
-                                cases[i-2][j+1].occupe = 1;
+                                cases[i-1][j-2].occupe = 9;
+                                cases[i-1][j-1].occupe = 9;
+                                cases[i-1][j].occupe = 9;
+                                cases[i-1][j+1].occupe = 9;
 
-                                cases[i-1][j-2].occupe = 1;
-                                cases[i-1][j-1].occupe = 1;
-                                cases[i-1][j].occupe = 1;
-                                cases[i-1][j+1].occupe = 1;
+                                cases[i][j-2].occupe = 9;
+                                cases[i][j-1].occupe = 9;
+                                cases[i][j].occupe = 3;
+                                cases[i][j+1].occupe = 9;
                             }
                         }
                     }

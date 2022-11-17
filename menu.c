@@ -103,6 +103,67 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     al_flip_display();
 }
 
+
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            switch (cases[i][j].occupe){
+                case 1 : {
+                    al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                             cases[i][j].x + HAUTEUR,
+                                             cases[i][j].y + LARGEUR, NOIR);
+                    break;
+                }
+                case 2 : {
+                    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
+                                          al_get_bitmap_height(cabane),
+                                          cases[i][j].x - LARGEUR,
+                                          cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                    break;
+                }
+                case 3 : {
+                    al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
+                                          al_get_bitmap_height(watercastle),
+                                          cases[i][j].x - 2 * LARGEUR - 10,
+                                          cases[i][j].y - 6 * HAUTEUR + 5, 130, 180, 0);
+                    break;
+                }
+                case 4 : {
+                    al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine),
+                                          al_get_bitmap_height(usine),
+                                          cases[i][j].x - 2 * LARGEUR,
+                                          cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            if (cases[i][j].occupe == 1){
+                al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                         cases[i][j].x + HAUTEUR - 1,
+                                         cases[i][j].y + LARGEUR - 1, BLEU);
+            }
+        }
+    }
+}
+
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            if (cases[i][j].occupe == 1){
+                al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                         cases[i][j].x + HAUTEUR - 1,
+                                         cases[i][j].y + LARGEUR - 1, JAUNE);
+            }
+        }
+    }
+}
+
 void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     al_clear_to_color(BLANC);
     //plateau(fplateau);
