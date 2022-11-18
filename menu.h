@@ -36,12 +36,17 @@ typedef struct {
     ALLEGRO_COLOR couleur;
 } Case;
 
+bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j);
+bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j);
 bool isInRect(int x, int y, int x1, int y1, int x2, int y2);
 void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec);
 void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne);
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
-void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
+void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info info, ALLEGRO_BITMAP *fplateau, ALLEGRO_FONT *text,
+                 ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting,ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
+                 ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne,
+                 ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec);
 void menud(ALLEGRO_BITMAP *fond);
 void plateau(ALLEGRO_BITMAP *fplateau);
 void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine);

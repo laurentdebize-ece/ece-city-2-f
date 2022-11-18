@@ -20,7 +20,7 @@ void dessinerMaisons(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_FONT *t
                     for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                         if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x + 1, cases[i][j].y + 1,
                                      cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
-                            if (cases[i][j].occupe == 0){
+                            if (accesConstructionMaison(cases, i, j)){
                                 al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                                       al_get_bitmap_height(cabane),
                                                       cases[i][j].x - LARGEUR,

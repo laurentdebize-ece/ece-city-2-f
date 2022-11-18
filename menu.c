@@ -18,6 +18,21 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     }
 }
 
+bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
+    return (cases[i][j-2].occupe == 0 && cases[i][j-1].occupe == 0 && cases[i][j].occupe == 0 && cases[i][j+1].occupe == 0 &&
+            cases[i-1][j-2].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-1][j+1].occupe == 0 &&
+            cases[i-2][j-2].occupe == 0 && cases[i-2][j-1].occupe == 0 && cases[i-2][j].occupe == 0 && cases[i-2][j+1].occupe == 0 &&
+            cases[i-3][j-2].occupe == 0 && cases[i-3][j-1].occupe == 0 && cases[i-3][j].occupe == 0 && cases[i-3][j+1].occupe == 0 &&
+            cases[i-4][j-2].occupe == 0 && cases[i-4][j-1].occupe == 0 && cases[i-4][j].occupe == 0 && cases[i-4][j+1].occupe == 0 &&
+            cases[i-5][j-2].occupe == 0 && cases[i-5][j-1].occupe == 0 && cases[i-5][j].occupe == 0 && cases[i-5][j+1].occupe == 0);
+}
+
+bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
+    return (cases[i][j].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-2][j].occupe == 0 &&
+            cases[i][j-1].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-2][j-1].occupe == 0 &&
+            cases[i][j+1].occupe == 0 && cases[i-1][j+1].occupe == 0 && cases[i-2][j+1].occupe == 0);
+}
+
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
     al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
     al_draw_filled_rectangle(600, 10, 1706, 86, GRIS_CLAIR);
@@ -164,12 +179,14 @@ void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
     }
 }
 
-void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
-    al_clear_to_color(BLANC);
-    //plateau(fplateau);
-    initCases(cases);
+void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info info, ALLEGRO_BITMAP *fplateau, ALLEGRO_FONT *text,
+                 ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting,ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
+                 ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne,
+                 ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
+    plateau(fplateau);
     dessinerCases(cases);
-    al_flip_display();
+    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+    afficherRessources(info, text, eau, argent, habitant, elec);
 }
 
 void menud(ALLEGRO_BITMAP *fond) {
