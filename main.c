@@ -1,5 +1,8 @@
 #include "menu.h"
 #include "routes.h"
+#include "maison.h"
+#include "chateauEau.h"
+#include "usine.h"
 
 
 int main() {
@@ -17,12 +20,12 @@ int main() {
     ALLEGRO_EVENT_QUEUE *queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_EVENT event;
-    ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne = NULL;
+    ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne, *clock = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text, *textBold;
 
 
-    //routes
+    ///routes
     ALLEGRO_BITMAP *routes, *routeDroite, *routeCote, *virageHaut, *virageBas, *croisementTBas, *croisementQuatres;
     routes = al_load_bitmap("../Images/routes.png");
     routeDroite = al_create_sub_bitmap(routes, 118, 209, 219, 320);
@@ -44,6 +47,7 @@ int main() {
     usine = al_load_bitmap("../Images/usine.png");
     route = al_load_bitmap("../Images/route.png");
     caserne = al_load_bitmap("../Images/caserne.png");
+    clock = al_load_bitmap("../Images/clock.png");
 
     text = al_load_ttf_font("../Fonts/calibri.ttf", 30, 0);
     textBold = al_load_ttf_font("../Fonts/calibrib.ttf", 50, 0);
@@ -61,7 +65,7 @@ int main() {
     bool menu = false;
     bool jeu = false;
     bool finRoute = false;
-    bool test = false;
+    bool envoiRoute = false;
     bool finCabane = false;
 
     int l = 0;
@@ -114,7 +118,7 @@ int main() {
             }
         }
         al_clear_to_color(BLANC);
-        //plateau(fplateau);
+        plateau(fplateau);
         initCases(cases);
         dessinerCases(cases);
         afficherRessources(info, text, eau, argent, habitant, elec);
@@ -123,65 +127,61 @@ int main() {
         while (!jeu) {
             al_wait_for_event(queue, &event);
             switch (event.type) {
-                case ALLEGRO_EVENT_MOUSE_BUTTON_UP: {
+                case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                        al_draw_filled_circle(330, 200, 90, GRIS_TRANSPARENT);
-                        while (!finCabane) {
-                            al_wait_for_event(queue, &event);
-                            switch (event.type) {
-                                case ALLEGRO_EVENT_MOUSE_AXES : {
-                                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
-                                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                                            if (isInRect(event.mouse.x, event.mouse.y, cases[i][j].x, cases[i][j].y,
-                                                         cases[i][j].x + HAUTEUR, cases[i][j].y + LARGEUR)) {
-                                                caseXActuCabane = cases[i][j].x;
-                                                caseYActuCabane = cases[i][j].y;
-                                                if (cases[i][j].occupe == 0) {
-                                                    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
-                                                                          al_get_bitmap_height(cabane),
-                                                                          cases[i][j].x - LARGEUR,
-                                                                          cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
-
-                                                    if (preCaseXCabane != cases[i][j].x ||
-                                                        preCaseYCabane != cases[i][j].y) {
-                                                        preCaseXCabane = cases[i][j].x;
-                                                        preCaseYCabane = cases[i][j].y;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    break;
-                                }
-                                case ALLEGRO_EVENT_MOUSE_BUTTON_UP: {
-                                    if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                                        afficherToolBox(text, textBold, setting, cabane,
-                                                        watercastle, usine, route, caserne);
-                                        finCabane = true;
-                                    }
-                                    break;
-                                }
-                            }
-                            al_flip_display();
-                        }
+                        dessinerMaisons(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 53, 333, 187, 467)){
+                        dessinerChateauEau(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 263, 333, 397, 467)){
+                        dessinerUsines(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 56, 746, 400, 820)) {
+                        raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        dessinerBat(cases, cabane, watercastle, usine);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
+                        raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        dessinerEau(cases);
+                    }
+                    if (isInRect(event.mouse.x, event.mouse.y, 56, 946, 400, 1020)) {
+                        raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        dessinerElec(cases);
                     }
                     break;
+                }
+                case ALLEGRO_EVENT_TIMER: {
+                    l = l + 1;
+                    if (l == 900) {
+                        l = 0;
+                        k = k + 1;
+                        if (k == 13) {
+                            k = 1;
+                            y = y + 1;
+                        }
+                    }
+                    al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
+                    al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
+                                          al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
+                    al_draw_textf(text, BLANC, 250, 30, 0, ":%d/%d", k, y);
+                    break;
+                }
+                case ALLEGRO_EVENT_DISPLAY_CLOSE: {
+                    jeu = true;
+                    fin = true;
+                    break;
+                }
             }
-            case ALLEGRO_EVENT_DISPLAY_CLOSE: {
-                jeu = true;
-                break;
-            }
+            al_flush_event_queue(queue);
+            al_flip_display();
         }
+        al_destroy_display(display);
+        al_destroy_event_queue(queue);
+        al_destroy_timer(timer);
     }
-    al_destroy_display(display);
-    al_destroy_event_queue(queue);
-    al_destroy_timer(timer);
 }
-
-}
-
-
 

@@ -18,6 +18,21 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     }
 }
 
+bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
+    return (cases[i][j-2].occupe == 0 && cases[i][j-1].occupe == 0 && cases[i][j].occupe == 0 && cases[i][j+1].occupe == 0 &&
+            cases[i-1][j-2].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-1][j+1].occupe == 0 &&
+            cases[i-2][j-2].occupe == 0 && cases[i-2][j-1].occupe == 0 && cases[i-2][j].occupe == 0 && cases[i-2][j+1].occupe == 0 &&
+            cases[i-3][j-2].occupe == 0 && cases[i-3][j-1].occupe == 0 && cases[i-3][j].occupe == 0 && cases[i-3][j+1].occupe == 0 &&
+            cases[i-4][j-2].occupe == 0 && cases[i-4][j-1].occupe == 0 && cases[i-4][j].occupe == 0 && cases[i-4][j+1].occupe == 0 &&
+            cases[i-5][j-2].occupe == 0 && cases[i-5][j-1].occupe == 0 && cases[i-5][j].occupe == 0 && cases[i-5][j+1].occupe == 0);
+}
+
+bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
+    return (cases[i][j].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-2][j].occupe == 0 &&
+            cases[i][j-1].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-2][j-1].occupe == 0 &&
+            cases[i][j+1].occupe == 0 && cases[i-1][j+1].occupe == 0 && cases[i-2][j+1].occupe == 0);
+}
+
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
     al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
     al_draw_filled_rectangle(600, 10, 1706, 86, GRIS_CLAIR);
@@ -70,7 +85,7 @@ void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *
     al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane), al_get_bitmap_height(cabane), 240, 115, 160, 160,
                           0);
     al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle), al_get_bitmap_height(watercastle), 25,
-                          290, 200, 200, 0);
+                          290, 190, 300, 0);
     al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine), al_get_bitmap_height(usine), 260, 320, 135, 135, 0);
     al_draw_scaled_bitmap(caserne, 0, 0, al_get_bitmap_width(caserne), al_get_bitmap_height(caserne), 160, 520, 135,
                           135, 0);
@@ -103,12 +118,75 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     al_flip_display();
 }
 
-void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
-    al_clear_to_color(BLANC);
-    //plateau(fplateau);
-    initCases(cases);
+
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            switch (cases[i][j].occupe){
+                case 1 : {
+                    al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                             cases[i][j].x + HAUTEUR,
+                                             cases[i][j].y + LARGEUR, NOIR);
+                    break;
+                }
+                case 2 : {
+                    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
+                                          al_get_bitmap_height(cabane),
+                                          cases[i][j].x - LARGEUR,
+                                          cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                    break;
+                }
+                case 3 : {
+                    al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
+                                          al_get_bitmap_height(watercastle),
+                                          cases[i][j].x - 2 * LARGEUR - 10,
+                                          cases[i][j].y - 6 * HAUTEUR + 5, 130, 180, 0);
+                    break;
+                }
+                case 4 : {
+                    al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine),
+                                          al_get_bitmap_height(usine),
+                                          cases[i][j].x - 2 * LARGEUR,
+                                          cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            if (cases[i][j].occupe == 1){
+                al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                         cases[i][j].x + HAUTEUR - 1,
+                                         cases[i][j].y + LARGEUR - 1, BLEU);
+            }
+        }
+    }
+}
+
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            if (cases[i][j].occupe == 1){
+                al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
+                                         cases[i][j].x + HAUTEUR - 1,
+                                         cases[i][j].y + LARGEUR - 1, JAUNE);
+            }
+        }
+    }
+}
+
+void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info info, ALLEGRO_BITMAP *fplateau, ALLEGRO_FONT *text,
+                 ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting,ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
+                 ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne,
+                 ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
+    plateau(fplateau);
     dessinerCases(cases);
-    al_flip_display();
+    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+    afficherRessources(info, text, eau, argent, habitant, elec);
 }
 
 void menud(ALLEGRO_BITMAP *fond) {
