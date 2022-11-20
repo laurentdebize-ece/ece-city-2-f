@@ -26,13 +26,14 @@ int main() {
 
 
     ///routes
-    ALLEGRO_BITMAP *routes, *routeDroite, *routeCote, *virageHaut, *virageBas, *croisementTBas, *croisementQuatres;
+    ALLEGRO_BITMAP *routes, *routeDroite, *routeCote, *virageHaut, *virageBas, *croisementTBas, *croisementQuatres, *croisementTHaut;
     routes = al_load_bitmap("../Images/routes.png");
     routeDroite = al_create_sub_bitmap(routes, 118, 209, 219, 320);
     routeCote = al_create_sub_bitmap(routes, 421, 65, 325, 217);
     virageHaut = al_create_sub_bitmap(routes, 69, 664, 274, 329);
     virageBas = al_create_sub_bitmap(routes, 804, 729, 273, 319);
     croisementTBas = al_create_sub_bitmap(routes, 421, 890, 322, 322);
+    croisementTHaut = al_create_sub_bitmap(routes, 421, 890, 322, 322);
     croisementQuatres = al_create_sub_bitmap(routes, 416, 344, 328, 414);
 
     argent = al_load_bitmap("../Images/argent.png");
@@ -129,16 +130,16 @@ int main() {
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, virageHaut, routeCote, routeDroite, virageBas, croisementQuatres, croisementTBas, croisementTHaut);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                        dessinerMaisons(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, virageHaut, routeCote, routeDroite, virageBas, croisementQuatres, croisementTBas, croisementTHaut);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 333, 187, 467)){
-                        dessinerChateauEau(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, virageHaut, routeCote, routeDroite, virageBas, croisementQuatres, croisementTBas, croisementTHaut);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 333, 397, 467)){
-                        dessinerUsines(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, virageHaut, routeCote, routeDroite, virageBas, croisementQuatres, croisementTBas, croisementTHaut);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 746, 400, 820)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
