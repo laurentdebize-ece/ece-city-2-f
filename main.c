@@ -26,14 +26,18 @@ int main() {
 
 
     ///routes
-    ALLEGRO_BITMAP *routes, *routeDroite, *routeCote, *virageHaut, *virageBas, *croisementTBas, *croisementQuatres;
-    routes = al_load_bitmap("../Images/routes.png");
-    routeDroite = al_create_sub_bitmap(routes, 118, 209, 219, 320);
-    routeCote = al_create_sub_bitmap(routes, 421, 65, 325, 217);
-    virageHaut = al_create_sub_bitmap(routes, 69, 664, 274, 329);
-    virageBas = al_create_sub_bitmap(routes, 804, 729, 273, 319);
-    croisementTBas = al_create_sub_bitmap(routes, 421, 890, 322, 322);
-    croisementQuatres = al_create_sub_bitmap(routes, 416, 344, 328, 414);
+    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
+    routeDroite = al_load_bitmap("../Routes/routedroite.png");
+    routeCote = al_load_bitmap("../Routes/routeCote");
+    routeTE = al_load_bitmap("../Routes/routeTE");
+    routeTO = al_load_bitmap("../Routes/routeTO");
+    routeTS = al_load_bitmap("../Routes/routeTS");
+    routeTN = al_load_bitmap("../Routes/routeTN");
+    routeX = al_load_bitmap("../Routes/routeX");
+    virageNE = al_load_bitmap("../Routes/virageNE");
+    virageON = al_load_bitmap("../Routes/virageON");
+    virageSE = al_load_bitmap("../Routes/virageSE");
+    virageSO = al_load_bitmap("../Routes/virageSO");
 
     argent = al_load_bitmap("../Images/argent.png");
     elec = al_load_bitmap("../Images/Electricite.png");
