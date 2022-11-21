@@ -21,7 +21,9 @@
 #define VERT al_map_rgb(50,175,0)
 #define BLEU al_map_rgb(181,236,248)
 #define JAUNE al_map_rgb(246,248,181)
+#define ROUGE al_map_rgb(255,0,0)
 #define GRIS_TRANSPARENT al_map_rgba(50, 50, 50, 50)
+
 
 typedef struct {
     int argent;
@@ -40,6 +42,7 @@ bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], i
 bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j);
 bool isInRect(int x, int y, int x1, int y1, int x2, int y2);
 void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
+void initRessources(Info info);
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec);
 void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne);
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);

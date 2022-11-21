@@ -68,6 +68,7 @@ int main() {
     bool envoiRoute = false;
     bool finCabane = false;
 
+    int dessin = -1;
     int l = 0;
     int k = 1;
     int y = 2022;
@@ -84,10 +85,10 @@ int main() {
 
     al_set_window_title(display, "ECE City");
     al_set_window_position(display, -3, 0);
-
+    Info info = {0};
     Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX];
-    Info info;
-    info.argent = 500000;
+
+
     menud(fond);
     while (!fin) {
         al_wait_for_event(queue, &event);
@@ -117,46 +118,68 @@ int main() {
                 }
             }
         }
-        al_clear_to_color(BLANC);
         plateau(fplateau);
         initCases(cases);
         dessinerCases(cases);
         afficherRessources(info, text, eau, argent, habitant, elec);
         afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+        al_draw_rounded_rectangle(48, 738, 402, 822, 10, 10, ROUGE,2);
         al_flip_display();
         while (!jeu) {
             al_wait_for_event(queue, &event);
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessinerRoutes(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite);
+                        dessin = 1;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
-                        dessinerMaisons(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessin = 2;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 333, 187, 467)){
-                        dessinerChateauEau(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessin = 3;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 333, 397, 467)){
-                        dessinerUsines(cases, text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                        dessin = 4;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 746, 400, 820)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        al_draw_rounded_rectangle(48, 738, 402, 822, 10, 10, ROUGE,2);
                         dessinerBat(cases, cabane, watercastle, usine);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        al_draw_rounded_rectangle(48, 838, 402, 922, 10, 10, ROUGE, 2);
                         dessinerEau(cases);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 946, 400, 1020)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                        al_draw_rounded_rectangle(48, 938, 402, 1022, 10, 10, ROUGE, 2);
                         dessinerElec(cases);
                     }
                     break;
                 }
                 case ALLEGRO_EVENT_TIMER: {
+                    switch (dessin){
+                        case 1 : {
+                            dessinerRoutes(&dessin, cases, info, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite, eau, argent, habitant, elec);
+                            break;
+                        }
+                        case 2 : {
+                            dessinerMaisons(&dessin, cases, info, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                            break;
+                        }
+                        case 3 : {
+                            dessinerChateauEau(&dessin, cases, info, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                            break;
+                        }
+                        case 4 : {
+                            dessinerUsines(&dessin, cases, info, text, textBold, setting, cabane, watercastle, usine, route, caserne, eau, argent, habitant, elec);
+                            break;
+                        }
+                    }
+
                     l = l + 1;
-                    if (l == 900) {
+                    if (l == 60) {
                         l = 0;
                         k = k + 1;
                         if (k == 13) {
@@ -167,7 +190,7 @@ int main() {
                     al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
                     al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
                                           al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
-                    al_draw_textf(text, BLANC, 250, 30, 0, ":%d/%d", k, y);
+                    al_draw_textf(text, BLANC, 250, 30, 0, ": %d/%d", k, y);
                     break;
                 }
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
@@ -176,8 +199,8 @@ int main() {
                     break;
                 }
             }
-            al_flush_event_queue(queue);
             al_flip_display();
+            al_flush_event_queue(queue);
         }
         al_destroy_display(display);
         al_destroy_event_queue(queue);
