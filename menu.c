@@ -1,5 +1,12 @@
 #include "menu.h"
 
+void initRessources(Info info){
+    info.argent = 500000;
+    info.nbhabitant = 0;
+    info.elec = 0;
+    info.eau = 0;
+}
+
 bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {
     return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
 }
@@ -34,7 +41,7 @@ bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, 
 }
 
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
-    al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
+    al_draw_filled_rectangle(450, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
     al_draw_filled_rectangle(600, 10, 1706, 86, GRIS_CLAIR);
     al_draw_filled_rectangle(603, 13, 1703, 83, BLANC);
     al_draw_filled_rectangle(606, 16, 1700, 80, GRIS_CLAIR);
@@ -46,8 +53,8 @@ void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, AL
                           60, 0);
 
     al_draw_textf(text, BLANC, 1520, 35, 0, ": %d", info.argent);
-    al_draw_textf(text, BLANC, 1270, 35, 0, ": %d", info.elec);
-    al_draw_textf(text, BLANC, 1020, 35, 0, ": %d", info.eau);
+    al_draw_textf(text, BLANC, 1270, 35, 0, ": %d dispo", info.elec);
+    al_draw_textf(text, BLANC, 1020, 35, 0, ": %d dispo", info.eau);
     al_draw_textf(text, BLANC, 770, 35, 0, ": %d", info.nbhabitant);
 }
 
@@ -84,8 +91,8 @@ void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *
     al_draw_scaled_bitmap(route, 0, 0, al_get_bitmap_width(route), al_get_bitmap_height(route), 50, 125, 125, 125, 0);
     al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane), al_get_bitmap_height(cabane), 240, 115, 160, 160,
                           0);
-    al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle), al_get_bitmap_height(watercastle), 25,
-                          290, 190, 300, 0);
+    al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle), al_get_bitmap_height(watercastle), 80,
+                          290, 125, 200, 0);
     al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine), al_get_bitmap_height(usine), 260, 320, 135, 135, 0);
     al_draw_scaled_bitmap(caserne, 0, 0, al_get_bitmap_width(caserne), al_get_bitmap_height(caserne), 160, 520, 135,
                           135, 0);
@@ -107,6 +114,7 @@ void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *
     al_draw_text(textBold, NOIR, 135, 957, 0, "Niveau -2");
 }
 
+
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
@@ -117,7 +125,6 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     }
     al_flip_display();
 }
-
 
 void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine){
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
@@ -185,8 +192,8 @@ void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info info, ALLEGRO_
                  ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
     plateau(fplateau);
     dessinerCases(cases);
-    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
     afficherRessources(info, text, eau, argent, habitant, elec);
+    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
 }
 
 void menud(ALLEGRO_BITMAP *fond) {
@@ -198,3 +205,5 @@ void plateau(ALLEGRO_BITMAP *fplateau) {
     al_draw_bitmap(fplateau, 0, 0, 0);
     al_flip_display();
 }
+
+
