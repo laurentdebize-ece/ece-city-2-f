@@ -41,7 +41,7 @@ bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, 
 }
 
 void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
-    al_draw_filled_rectangle(0, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
+    al_draw_filled_rectangle(450, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
     al_draw_filled_rectangle(600, 10, 1706, 86, GRIS_CLAIR);
     al_draw_filled_rectangle(603, 13, 1703, 83, BLANC);
     al_draw_filled_rectangle(606, 16, 1700, 80, GRIS_CLAIR);
@@ -53,8 +53,8 @@ void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, AL
                           60, 0);
 
     al_draw_textf(text, BLANC, 1520, 35, 0, ": %d", info.argent);
-    al_draw_textf(text, BLANC, 1270, 35, 0, ": %d", info.elec);
-    al_draw_textf(text, BLANC, 1020, 35, 0, ": %d", info.eau);
+    al_draw_textf(text, BLANC, 1270, 35, 0, ": %d dispo", info.elec);
+    al_draw_textf(text, BLANC, 1020, 35, 0, ": %d dispo", info.eau);
     al_draw_textf(text, BLANC, 770, 35, 0, ": %d", info.nbhabitant);
 }
 
