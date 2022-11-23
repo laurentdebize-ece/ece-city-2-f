@@ -23,21 +23,21 @@ int main() {
     ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne, *clock = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text, *textBold;
+    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
 
 
     ///routes
-    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
     routeDroite = al_load_bitmap("../Routes/routedroite.png");
-    routeCote = al_load_bitmap("../Routes/routeCote");
-    routeTE = al_load_bitmap("../Routes/routeTE");
-    routeTO = al_load_bitmap("../Routes/routeTO");
-    routeTS = al_load_bitmap("../Routes/routeTS");
-    routeTN = al_load_bitmap("../Routes/routeTN");
-    routeX = al_load_bitmap("../Routes/routeX");
-    virageNE = al_load_bitmap("../Routes/virageNE");
-    virageON = al_load_bitmap("../Routes/virageON");
-    virageSE = al_load_bitmap("../Routes/virageSE");
-    virageSO = al_load_bitmap("../Routes/virageSO");
+    routeCote = al_load_bitmap("../Routes/routeCote.png");
+    routeTE = al_load_bitmap("../Routes/routeTE.png");
+    routeTO = al_load_bitmap("../Routes/routeTO.png");
+    routeTS = al_load_bitmap("../Routes/routeTS.png");
+    routeTN = al_load_bitmap("../Routes/routeTN.png");
+    routeX = al_load_bitmap("../Routes/routeX.png");
+    virageNE = al_load_bitmap("../Routes/virageNE.png");
+    virageON = al_load_bitmap("../Routes/virageON.png");
+    virageSE = al_load_bitmap("../Routes/virageSE.png");
+    virageSO = al_load_bitmap("../Routes/virageSO.png");
 
     argent = al_load_bitmap("../Images/argent.png");
     elec = al_load_bitmap("../Images/Electricite.png");
@@ -138,7 +138,7 @@ int main() {
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessin = -1;
+                        dessin = 1;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
                         dessin = 2;
@@ -172,7 +172,10 @@ int main() {
                 case ALLEGRO_EVENT_TIMER: {
                     switch (dessin) {
                         case 1 : {
-                            //dessinerRoutes(&dessin, cases, &info, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite, eau, argent, habitant, elec);
+                            dessinerRoutes(&dessin, cases, &info, text, textBold, setting,
+                                           cabane, watercastle, usine, caserne, routeCote, routeDroite, routeTE,
+                                           routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO,
+                                           eau, argent, habitant, elec, route);
                             break;
                         }
                         case 2 : {
