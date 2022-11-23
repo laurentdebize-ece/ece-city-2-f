@@ -77,12 +77,6 @@ int main() {
     int k = 1;
     int y = 2022;
 
-
-    int preCaseXCabane = -100;
-    int preCaseYCabane = -100;
-    int caseXActuCabane = -100;
-    int caseYActuCabane = -100;
-
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
@@ -95,8 +89,9 @@ int main() {
     info.elec = 0;
     info.eau = 0;
     Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX];
+    preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX];
     initCases(cases);
-
+    initPreCases(preCases);
 
     menud(fond);
     while (!fin) {
@@ -153,7 +148,8 @@ int main() {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route,
                                     caserne, eau, argent, habitant, elec);
                         al_draw_rounded_rectangle(48, 738, 402, 822, 10, 10, ROUGE, 2);
-                        dessinerBat(cases, cabane, watercastle, usine);
+                        dessinerBat(cases, cabane, watercastle, usine, routeCote, routeDroite, routeTE,
+                                    routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route,
@@ -173,9 +169,7 @@ int main() {
                     switch (dessin) {
                         case 1 : {
                             dessinerRoutes(&dessin, cases, &info, text, textBold, setting,
-                                           cabane, watercastle, usine, caserne, routeCote, routeDroite, routeTE,
-                                           routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO,
-                                           eau, argent, habitant, elec, route);
+                                           cabane, watercastle, usine, caserne, eau, argent, habitant, elec, route);
                             break;
                         }
                         case 2 : {
@@ -193,8 +187,19 @@ int main() {
                                            route, caserne, eau, argent, habitant, elec);
                         }
                     }
+                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                            if (preCases[i][j].occupe != cases[i][j].occupe || preCases[i][j].niveau != cases[i][j].niveau){
+                                dessinerBat(cases, cabane, watercastle, usine, routeCote, routeDroite, routeTE,
+                                            routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
+                            }
+                            preCases[i][j].occupe = cases[i][j].occupe;
+                            preCases[i][j].niveau = cases[i][j].niveau;
+                        }
+                    }
+
                     l = l + 1;
-                    if (l == 60) {
+                    if (l == 900) {
                         l = 0;
                         k = k + 1;
                         if (k == 13) {
