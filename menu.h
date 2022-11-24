@@ -37,6 +37,7 @@ typedef struct {
     int occupe;
     ALLEGRO_COLOR couleur;
     int niveau;
+    int temps;
 } Case;
 
 typedef struct {

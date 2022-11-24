@@ -34,6 +34,7 @@ void dessinerMaisons(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], In
                         cases[i - 1][j + 1].occupe = 9;
                         cases[i - 2][j + 1].occupe = 9;
                         cases[i][j].niveau = 1;
+                        cases[i][j].temps = 0;
                         info->argent -= 1000;
                         info->nbhabitant += 10;
                         nbMaisonsPosees += 1;

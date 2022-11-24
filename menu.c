@@ -279,5 +279,3 @@ void plateau(ALLEGRO_BITMAP *fplateau) {
     al_draw_bitmap(fplateau, 0, 0, 0);
     al_flip_display();
 }
-
-

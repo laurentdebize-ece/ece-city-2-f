@@ -23,12 +23,12 @@ int main() {
     ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *maison, *immeuble, *gratteciel, *watercastle, *usine, *route, *caserne, *clock = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text, *textBold;
-    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
+    ALLEGRO_BITMAP *routeNS, *routeOE, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
 
 
     ///routes
-    routeDroite = al_load_bitmap("../Routes/routedroite.png");
-    routeCote = al_load_bitmap("../Routes/routeCote.png");
+    routeNS = al_load_bitmap("../Routes/routeNS.png");
+    routeOE = al_load_bitmap("../Routes/routeOE.png");
     routeTE = al_load_bitmap("../Routes/routeTE.png");
     routeTO = al_load_bitmap("../Routes/routeTO.png");
     routeTS = al_load_bitmap("../Routes/routeTS.png");
@@ -150,7 +150,8 @@ int main() {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route,
                                     caserne, eau, argent, habitant, elec);
                         al_draw_rounded_rectangle(48, 738, 402, 822, 10, 10, ROUGE, 2);
-                        dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeCote, routeDroite, routeTE,
+                        dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeOE, routeNS,
+                                    routeTE,
                                     routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
@@ -191,41 +192,71 @@ int main() {
                     }
                     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
                         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                            if (preCases[i][j].occupe != cases[i][j].occupe || preCases[i][j].niveau != cases[i][j].niveau){
-                                dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeCote, routeDroite, routeTE,
+                            if (preCases[i][j].occupe != cases[i][j].occupe ||
+                                preCases[i][j].niveau != cases[i][j].niveau) {
+                                dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeOE,
+                                            routeNS, routeTE,
                                             routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
                             }
                             preCases[i][j].occupe = cases[i][j].occupe;
                             preCases[i][j].niveau = cases[i][j].niveau;
                         }
                     }
+                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                            if (cases[i][j].occupe == 2 && cases[i][j].niveau <= 4) {
+                                cases[i][j].temps = cases[i][j].temps + 1;
+                                if (cases[i][j].temps == 900) {
+                                    cases[i][j].niveau = cases[i][j].niveau + 1;
+                                    info.argent -= 1000;
+                                    info.nbhabitant += 300;
+                                    plateau(fplateau);
+                                    dessinerCases(cases);
+                                    afficherRessources(info, text, eau, argent, habitant, elec);
+                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                }
+                                if (cases[i][j].temps == 1800) {
+                                    cases[i][j].niveau = cases[i][j].niveau + 1;
+                                    info.argent -= 1000;
+                                    info.nbhabitant += 300;
+                                    plateau(fplateau);
+                                    dessinerCases(cases);
+                                    afficherRessources(info, text, eau, argent, habitant, elec);
+                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                }
+                                if (cases[i][j].temps == 2700) {
+                                    cases[i][j].niveau = cases[i][j].niveau + 1;
+                                    info.argent -= 1000;
+                                    info.nbhabitant += 300;
+                                    plateau(fplateau);
+                                    dessinerCases(cases);
+                                    afficherRessources(info, text, eau, argent, habitant, elec);
+                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                }
 
+                            }
+                        }
+                    }
                     jour = jour + 1;
                     if (jour == 900) {
                         jour = 0;
                         mois = mois + 1;
-                        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
-                            for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                                if(cases[i][j].occupe == 2 && cases[i][j].niveau <= 4){
-                                    cases[i][j].niveau = cases[i][j].niveau + 1;
-                                    info.argent -= 1000;
-                                    info.nbhabitant += 300;
-                                    afficherRessources(info, text, eau, argent, habitant, elec);
-                                }
-                            }
-                            }
-                        if (mois == 13) {
-                            mois = 1;
-                            annee = annee + 1;
-                        }
+                        info.argent += 20 * info.nbhabitant;
+
                     }
+
+                    if (mois == 13) {
+                        mois = 1;
+                        annee = annee + 1;
+                    }
+                }
                     al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
                     al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
                                           al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
                     al_draw_textf(text, BLANC, 250, 30, 0, ": %d/%d", mois, annee);
 
                     break;
-                }
+
                 case ALLEGRO_EVENT_DISPLAY_CLOSE: {
                     jeu = true;
                     fin = true;
