@@ -38,12 +38,13 @@ typedef struct {
     ALLEGRO_COLOR couleur;
     int niveau;
     int temps;
+    int consoeau;
+    int consoelec;
 } Case;
 
 typedef struct {
     int occupe, niveau;
 } preCase;
-
 
 
 bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j);
@@ -65,8 +66,5 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
                  ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO);
 void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
 void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
-
-
-
 
 #endif //ECE_CITY_2_F_MENU_H

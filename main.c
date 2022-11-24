@@ -113,12 +113,12 @@ int main() {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 207, 809, 800, 960)) {
                         menu = true;
-                        mode = 0;
+                        mode = 0;//mode capitaliste
                     }
 
                     if (isInRect(event.mouse.x, event.mouse.y, 1111, 809, 1705, 960)) {
                         menu = true;
-                        mode = 1;
+                        mode = 1;//mode communiste
                     }
                     break;
                 }
@@ -190,61 +190,125 @@ int main() {
                                            route, caserne, eau, argent, habitant, elec);
                         }
                     }
-                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
-                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                            if (preCases[i][j].occupe != cases[i][j].occupe ||
-                                preCases[i][j].niveau != cases[i][j].niveau) {
-                                dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeOE,
-                                            routeNS, routeTE,
-                                            routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
+                    if(mode == 0){//mode capitaliste
+                        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                            for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                                if (preCases[i][j].occupe != cases[i][j].occupe ||
+                                    preCases[i][j].niveau != cases[i][j].niveau) {
+                                    dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeOE,
+                                                routeNS, routeTE,
+                                                routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
+                                }
+                                preCases[i][j].occupe = cases[i][j].occupe;
+                                preCases[i][j].niveau = cases[i][j].niveau;
                             }
-                            preCases[i][j].occupe = cases[i][j].occupe;
-                            preCases[i][j].niveau = cases[i][j].niveau;
+                        }
+                        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                            for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                                if (cases[i][j].occupe == 2 && cases[i][j].niveau <= 4) {
+                                    cases[i][j].temps = cases[i][j].temps + 1;
+                                    if (cases[i][j].temps == 900) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 1000;
+                                        info.nbhabitant += 200;
+                                        info.elec -= 50;
+                                        info.eau -= 50;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+                                    if (cases[i][j].temps == 1800) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 2000;
+                                        info.nbhabitant += 400;
+                                        info.elec -= 150;
+                                        info.eau -= 150;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+                                    if (cases[i][j].temps == 2700) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 3000;
+                                        info.nbhabitant += 600;
+                                        info.elec -= 300;
+                                        info.eau -= 300;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+
+                                }
+                            }
                         }
                     }
-                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
-                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-                            if (cases[i][j].occupe == 2 && cases[i][j].niveau <= 4) {
-                                cases[i][j].temps = cases[i][j].temps + 1;
-                                if (cases[i][j].temps == 900) {
-                                    cases[i][j].niveau = cases[i][j].niveau + 1;
-                                    info.argent -= 1000;
-                                    info.nbhabitant += 300;
-                                    plateau(fplateau);
-                                    dessinerCases(cases);
-                                    afficherRessources(info, text, eau, argent, habitant, elec);
-                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
-                                }
-                                if (cases[i][j].temps == 1800) {
-                                    cases[i][j].niveau = cases[i][j].niveau + 1;
-                                    info.argent -= 1000;
-                                    info.nbhabitant += 300;
-                                    plateau(fplateau);
-                                    dessinerCases(cases);
-                                    afficherRessources(info, text, eau, argent, habitant, elec);
-                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
-                                }
-                                if (cases[i][j].temps == 2700) {
-                                    cases[i][j].niveau = cases[i][j].niveau + 1;
-                                    info.argent -= 1000;
-                                    info.nbhabitant += 300;
-                                    plateau(fplateau);
-                                    dessinerCases(cases);
-                                    afficherRessources(info, text, eau, argent, habitant, elec);
-                                    afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
-                                }
 
+                    if(mode == 1){//mode communiste
+                        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                            for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                                if (preCases[i][j].occupe != cases[i][j].occupe ||
+                                    preCases[i][j].niveau != cases[i][j].niveau) {
+                                    dessinerBat(cases, cabane, maison, immeuble, gratteciel, watercastle, usine, routeOE,
+                                                routeNS, routeTE,
+                                                routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
+                                }
+                                preCases[i][j].occupe = cases[i][j].occupe;
+                                preCases[i][j].niveau = cases[i][j].niveau;
                             }
                         }
+                        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                            for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                                if (cases[i][j].occupe == 2 && cases[i][j].niveau <= 4) {
+                                    cases[i][j].temps = cases[i][j].temps + 1;
+                                    if (cases[i][j].temps == 900 && info.elec -50 >= 0 && info.eau - 50 >= 0) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 1000;
+                                        info.nbhabitant += 200;
+                                        info.elec -= 50;
+                                        info.eau -= 50;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+                                    if (cases[i][j].temps == 1800 && info.elec -150 >= 0 && info.eau -150 >= 0) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 2000;
+                                        info.nbhabitant += 400;
+                                        info.elec -= 150;
+                                        info.eau -= 150;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+                                    if (cases[i][j].temps == 2700 && info.elec -300 >= 0 && info.eau - 300 >= 0) {
+                                        cases[i][j].niveau = cases[i][j].niveau + 1;
+                                        info.argent -= 3000;
+                                        info.nbhabitant += 600;
+                                        info.elec -= 300;
+                                        info.eau -= 300;
+                                        plateau(fplateau);
+                                        dessinerCases(cases);
+                                        afficherRessources(info, text, eau, argent, habitant, elec);
+                                        afficherToolBox(text, textBold, setting, cabane, watercastle, usine, route, caserne);
+                                    }
+
+                                }
+                            }
+
+                    }
                     }
                     jour = jour + 1;
                     if (jour == 900) {
                         jour = 0;
                         mois = mois + 1;
-                        info.argent += 20 * info.nbhabitant;
+                        info.argent += 10 * info.nbhabitant;
 
                     }
-
                     if (mois == 13) {
                         mois = 1;
                         annee = annee + 1;
@@ -270,5 +334,4 @@ int main() {
         al_destroy_event_queue(queue);
         al_destroy_timer(timer);
     }
-
 }
