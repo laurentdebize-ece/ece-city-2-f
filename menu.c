@@ -135,18 +135,44 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     al_flip_display();
 }
 
-void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine, ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE, ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX, ALLEGRO_BITMAP *virageNE,
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* maison, ALLEGRO_BITMAP* immeuble, ALLEGRO_BITMAP* gratteciel, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine, ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE, ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX, ALLEGRO_BITMAP *virageNE,
                  ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO){
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             switch (cases[i][j].occupe){
-                case 2 : {
-                    al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
-                                          al_get_bitmap_height(cabane),
-                                          cases[i][j].x - LARGEUR,
-                                          cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
-                    break;
+                case 2 :
+                    switch (cases[i][j].niveau){
+                        case 1 : {
+                            al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
+                                                  al_get_bitmap_height(cabane),
+                                                  cases[i][j].x - LARGEUR,
+                                                  cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                            break;
+                        }
+
+                        case 2 : {
+                            al_draw_scaled_bitmap(maison, 0, 0, al_get_bitmap_width(maison),
+                                                  al_get_bitmap_height(maison),
+                                                  cases[i][j].x - LARGEUR,
+                                                  cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                            break;
+                        }
+                        case 3 : {
+                            al_draw_scaled_bitmap(immeuble, 0, 0, al_get_bitmap_width(immeuble),
+                                                  al_get_bitmap_height(immeuble),
+                                                  cases[i][j].x - LARGEUR,
+                                                  cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                            break;
+                        }
+                        case 4 : {
+                            al_draw_scaled_bitmap(gratteciel, 0, 0, al_get_bitmap_width(gratteciel),
+                                                  al_get_bitmap_height(gratteciel),
+                                                  cases[i][j].x - LARGEUR,
+                                                  cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
+                            break;
+                        }
                 }
+                break;
                 case 3 : {
                     al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
                                           al_get_bitmap_height(watercastle),
@@ -253,5 +279,3 @@ void plateau(ALLEGRO_BITMAP *fplateau) {
     al_draw_bitmap(fplateau, 0, 0, 0);
     al_flip_display();
 }
-
-
