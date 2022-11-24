@@ -140,12 +140,6 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             switch (cases[i][j].occupe){
-                case 1 : {
-                    al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
-                                             cases[i][j].x + HAUTEUR,
-                                             cases[i][j].y + LARGEUR, NOIR);
-                    break;
-                }
                 case 2 : {
                     al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                           al_get_bitmap_height(cabane),

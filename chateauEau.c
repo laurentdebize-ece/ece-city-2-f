@@ -15,7 +15,7 @@ void dessinerChateauEau(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX],
     int x = al_get_mouse_state_axis(&mouseState, 0);
     int y = al_get_mouse_state_axis(&mouseState, 1);
     int nbChateauxPoses = 1;
-
+    al_draw_circle(120, 400, 92, ROUGE, 2);
     if (al_mouse_button_down(&mouseState, 1) == true) {
         for (int i = 0; i < NB_LIGNES_MAX; ++i) {
             for (int j = 0; j < NB_COLONNES_MAX; ++j) {

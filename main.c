@@ -73,9 +73,9 @@ int main() {
     bool finCabane = false;
 
     int dessin = -1;
-    int l = 0;
-    int k = 1;
-    int y = 2022;
+    int jour = 0;
+    int mois = 12;
+    int annee = 2022;
 
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
@@ -198,19 +198,19 @@ int main() {
                         }
                     }
 
-                    l = l + 1;
-                    if (l == 900) {
-                        l = 0;
-                        k = k + 1;
-                        if (k == 13) {
-                            k = 1;
-                            y = y + 1;
+                    jour = jour + 1;
+                    if (jour == 900) {
+                        jour = 0;
+                        mois = mois + 1;
+                        if (mois == 13) {
+                            mois = 1;
+                            annee = annee + 1;
                         }
                     }
                     al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
                     al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
                                           al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
-                    al_draw_textf(text, BLANC, 250, 30, 0, ": %d/%d", k, y);
+                    al_draw_textf(text, BLANC, 250, 30, 0, ": %d/%d", mois, annee);
 
                     break;
                 }

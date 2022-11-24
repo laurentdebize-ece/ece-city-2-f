@@ -1,5 +1,10 @@
 #include "routes.h"
 
+bool test(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe){
+    return (cases[i][j].occupe == occupe);
+}
+
+
 void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info *info, ALLEGRO_FONT *text,
                     ALLEGRO_FONT *textBold,
                     ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine,
@@ -20,20 +25,109 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
             for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                 if (isInRect(x, y, cases[i][j].x + 1, cases[i][j].y + 1,
                              cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
-                    if (cases[i][j].occupe == 0) {
-                        if (cases[i - 1][j].occupe == 0 && cases[i + 1][j].occupe == 0 && cases[i][j - 1].occupe == 0 &&
-                            cases[i][j + 1].occupe == 0) {
+                    if (test(cases, i, j, 0)) {
+                        ///ROUTES NS
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && test(cases, i, j-1, 0) && test(cases, i, j+1, 0)){
                             cases[i][j].occupe = 10;
                         }
-                        if ((cases[i - 1][j].occupe == 11 && cases[i + 1][j].occupe == 0) &&
-                            (cases[i][j - 1].occupe == 0 && cases[i][j + 1].occupe == 0)) {
+                        if (test(cases, i-1, j, 11) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                        (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
                             cases[i][j].occupe = 11;
                         }
-                        if ((cases[i - 1][j].occupe == 0 && cases[i + 1][j].occupe == 11) &&
-                            (cases[i][j - 1].occupe == 0 && cases[i][j + 1].occupe == 0)) {
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 11) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
                             cases[i][j].occupe = 11;
                         }
-                        if ((cases[i - 1][j].occupe == 10 && cases[i + 1][j].occupe == 0) &&
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 11;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 11;
+                        }
+                        ///ROUTES OE
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 10) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 10;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 10)) &&
+                            (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 10;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 11) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 10;
+                            cases[i][j-1].occupe = 10;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 11)) &&
+                            (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 10;
+                            cases[i][j+1].occupe = 10;
+                        }
+
+                        ///VIRAGES
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 15;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 10) && test(cases, i+1, j+1, 0))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 12;
+                        }
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 10) && (test(cases, i+1, j-1, 10) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 14;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 10))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 13;
+                        }
+
+                        ///ROUTES T
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 10) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 18;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 11) && test(cases, i, j+1, 0)) &&
+                            test(cases, i-1, j-1, 11) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 11) && test(cases, i+1, j+1, 0))) {
+                            cases[i][j].occupe = 10;
+                            cases[i][j-1].occupe = 19;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 10) && test(cases, i+1, j+1, 10)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 16;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 11)) &&
+                            test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 11) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 11))) {
+                            cases[i][j].occupe = 11;
+                            cases[i][j+1].occupe = 17;
+                        }
+                        ///ROUTE X
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 10) && test(cases, i, j+1, 10)) &&
+                            test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0))) {
+                            cases[i][j].occupe = 20;
+                            cases[i-1][j].occupe = 11;
+                            cases[i+1][j].occupe = 11;
+                        }
+
+
+
+
+
+
+
+
+
+                        /*if ((cases[i - 1][j].occupe == 10 && cases[i + 1][j].occupe == 0) &&
                             (cases[i][j - 1].occupe == 0 && cases[i][j + 1].occupe == 0)) {
                             cases[i][j].occupe = 11;
                             cases[i - 1][j].occupe = 11;
@@ -141,7 +235,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                         if (cases[i][j - 1].occupe == 1 && cases[i][j + 1].occupe == 1 && cases[i + 1][j].occupe == 1 &&
                             cases[i - 1][j].occupe == 0) {
                             cases[i][j].occupe = 1;
-                        }
+                        }*/
                     }
                 }
             }
