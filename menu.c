@@ -19,8 +19,17 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
             cases[i][j].hauteur = 25;
             cases[i][j].x = 625 + j * cases[i][j].largeur;
             cases[i][j].y = 145 + i * cases[i][j].hauteur;
-            cases[i][j].couleur = NOIR;
             cases[i][j].occupe = 0;
+            cases[i][j].niveau = 9;
+        }
+    }
+}
+
+void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+            preCases[i][j].occupe = 0;
+            preCases[i][j].niveau = 9;
         }
     }
 }
@@ -120,13 +129,14 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     for (i = 0; i < NB_LIGNES_MAX; i++) {
         for (j = 0; j < NB_COLONNES_MAX; j++) {
             al_draw_rectangle(cases[i][j].x, cases[i][j].y, cases[i][j].x + cases[i][j].largeur,
-                              cases[i][j].y + +cases[i][j].hauteur, cases[i][j].couleur, 1);
+                              cases[i][j].y + +cases[i][j].hauteur, NOIR, 1);
         }
     }
     al_flip_display();
 }
 
-void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine){
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine, ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE, ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX, ALLEGRO_BITMAP *virageNE,
+                 ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO){
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             switch (cases[i][j].occupe){
@@ -155,6 +165,50 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
                                           al_get_bitmap_height(usine),
                                           cases[i][j].x - 2 * LARGEUR,
                                           cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
+                    break;
+                }
+                case 10 : {
+                    al_draw_bitmap(routeOE, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 11 : {
+                    al_draw_bitmap(routeNS, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 12 : {
+                    al_draw_bitmap(virageON, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 13 : {
+                    al_draw_bitmap(virageNE, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 14 : {
+                    al_draw_bitmap(virageSE, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 15 : {
+                    al_draw_bitmap(virageSO, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 16 : {
+                    al_draw_bitmap(routeTN, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 17 : {
+                    al_draw_bitmap(routeTO, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 18 : {
+                    al_draw_bitmap(routeTS, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 19 : {
+                    al_draw_bitmap(routeTE, cases[i][j].x, cases[i][j].y, 0);
+                    break;
+                }
+                case 20 : {
+                    al_draw_bitmap(routeX, cases[i][j].x, cases[i][j].y, 0);
                     break;
                 }
             }

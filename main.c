@@ -23,21 +23,21 @@ int main() {
     ALLEGRO_BITMAP *argent, *elec, *habitant, *eau, *setting, *cabane, *watercastle, *usine, *route, *caserne, *clock = NULL;
     ALLEGRO_BITMAP *fond, *fplateau = NULL;
     ALLEGRO_FONT *text, *textBold;
+    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
 
 
     ///routes
-    ALLEGRO_BITMAP *routeDroite, *routeCote, *routeTE, *routeTN, *routeTO, *routeTS, *routeX, *virageNE, *virageON, *virageSE, *virageSO;
     routeDroite = al_load_bitmap("../Routes/routedroite.png");
-    routeCote = al_load_bitmap("../Routes/routeCote");
-    routeTE = al_load_bitmap("../Routes/routeTE");
-    routeTO = al_load_bitmap("../Routes/routeTO");
-    routeTS = al_load_bitmap("../Routes/routeTS");
-    routeTN = al_load_bitmap("../Routes/routeTN");
-    routeX = al_load_bitmap("../Routes/routeX");
-    virageNE = al_load_bitmap("../Routes/virageNE");
-    virageON = al_load_bitmap("../Routes/virageON");
-    virageSE = al_load_bitmap("../Routes/virageSE");
-    virageSO = al_load_bitmap("../Routes/virageSO");
+    routeCote = al_load_bitmap("../Routes/routeCote.png");
+    routeTE = al_load_bitmap("../Routes/routeTE.png");
+    routeTO = al_load_bitmap("../Routes/routeTO.png");
+    routeTS = al_load_bitmap("../Routes/routeTS.png");
+    routeTN = al_load_bitmap("../Routes/routeTN.png");
+    routeX = al_load_bitmap("../Routes/routeX.png");
+    virageNE = al_load_bitmap("../Routes/virageNE.png");
+    virageON = al_load_bitmap("../Routes/virageON.png");
+    virageSE = al_load_bitmap("../Routes/virageSE.png");
+    virageSO = al_load_bitmap("../Routes/virageSO.png");
 
     argent = al_load_bitmap("../Images/argent.png");
     elec = al_load_bitmap("../Images/Electricite.png");
@@ -77,12 +77,6 @@ int main() {
     int k = 1;
     int y = 2022;
 
-
-    int preCaseXCabane = -100;
-    int preCaseYCabane = -100;
-    int caseXActuCabane = -100;
-    int caseYActuCabane = -100;
-
     al_register_event_source(queue, al_get_display_event_source(display));
     al_register_event_source(queue, al_get_timer_event_source(timer));
     al_register_event_source(queue, al_get_mouse_event_source());
@@ -95,8 +89,9 @@ int main() {
     info.elec = 0;
     info.eau = 0;
     Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX];
+    preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX];
     initCases(cases);
-
+    initPreCases(preCases);
 
     menud(fond);
     while (!fin) {
@@ -138,7 +133,7 @@ int main() {
             switch (event.type) {
                 case ALLEGRO_EVENT_MOUSE_BUTTON_UP : {
                     if (isInRect(event.mouse.x, event.mouse.y, 53, 133, 187, 267)) {
-                        dessin = -1;
+                        dessin = 1;
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 263, 133, 397, 267)) {
                         dessin = 2;
@@ -153,7 +148,8 @@ int main() {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route,
                                     caserne, eau, argent, habitant, elec);
                         al_draw_rounded_rectangle(48, 738, 402, 822, 10, 10, ROUGE, 2);
-                        dessinerBat(cases, cabane, watercastle, usine);
+                        dessinerBat(cases, cabane, watercastle, usine, routeCote, routeDroite, routeTE,
+                                    routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
                     }
                     if (isInRect(event.mouse.x, event.mouse.y, 56, 846, 400, 920)) {
                         raffraichir(cases, info, fplateau, text, textBold, setting, cabane, watercastle, usine, route,
@@ -172,7 +168,8 @@ int main() {
                 case ALLEGRO_EVENT_TIMER: {
                     switch (dessin) {
                         case 1 : {
-                            //dessinerRoutes(&dessin, cases, &info, text, textBold, setting, cabane, watercastle, usine, route, caserne, routeDroite, eau, argent, habitant, elec);
+                            dessinerRoutes(&dessin, cases, &info, text, textBold, setting,
+                                           cabane, watercastle, usine, caserne, eau, argent, habitant, elec, route);
                             break;
                         }
                         case 2 : {
@@ -190,8 +187,19 @@ int main() {
                                            route, caserne, eau, argent, habitant, elec);
                         }
                     }
+                    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+                        for (int j = 0; j < NB_COLONNES_MAX; ++j) {
+                            if (preCases[i][j].occupe != cases[i][j].occupe || preCases[i][j].niveau != cases[i][j].niveau){
+                                dessinerBat(cases, cabane, watercastle, usine, routeCote, routeDroite, routeTE,
+                                            routeTN, routeTO, routeTS, routeX, virageNE, virageON, virageSE, virageSO);
+                            }
+                            preCases[i][j].occupe = cases[i][j].occupe;
+                            preCases[i][j].niveau = cases[i][j].niveau;
+                        }
+                    }
+
                     l = l + 1;
-                    if (l == 60) {
+                    if (l == 900) {
                         l = 0;
                         k = k + 1;
                         if (k == 13) {
