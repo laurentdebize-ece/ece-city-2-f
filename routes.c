@@ -68,8 +68,30 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             cases[i][j+1].occupe = 10;
                         }
 
-                        ///VIRAGES
+                        ///VIRAGES EO
                         if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 15;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 10) && test(cases, i+1, j+1, 0))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 12;
+                        }
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            (test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 10) && (test(cases, i+1, j-1, 10) && test(cases, i+1, j+1, 0)))) {
+                            cases[i][j].occupe = 11;
+                            cases[i-1][j].occupe = 14;
+                        }
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
+                            test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 10))) {
+                            cases[i][j].occupe = 11;
+                            cases[i+1][j].occupe = 13;
+                        }
+
+                        ///VIRAGES NS
+                        if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 0)) &&
                             (test(cases, i-1, j-1, 10) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0)))) {
                             cases[i][j].occupe = 11;
                             cases[i-1][j].occupe = 15;
@@ -108,12 +130,18 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                         }
                         if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && (test(cases, i, j-1, 0) && test(cases, i, j+1, 11)) &&
                             test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 11) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 11))) {
-                            cases[i][j].occupe = 11;
+                            cases[i][j].occupe = 10;
                             cases[i][j+1].occupe = 17;
                         }
                         ///ROUTE X
                         if (test(cases, i-1, j, 10) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 10) && test(cases, i, j+1, 10)) &&
                             test(cases, i-1, j-1, 0) && test(cases, i-1, j+1, 0) && (test(cases, i+1, j-1, 0) && test(cases, i+1, j+1, 0))) {
+                            cases[i][j].occupe = 20;
+                            cases[i-1][j].occupe = 11;
+                            cases[i+1][j].occupe = 11;
+                        }
+                        if (test(cases, i-1, j, 10) && test(cases, i+1, j, 10) && (test(cases, i, j-1, 11) && test(cases, i, j+1, 11)) &&
+                            test(cases, i-1, j-1, 14) && test(cases, i-1, j+1, 15) && (test(cases, i+1, j-1, 13) && test(cases, i+1, j+1, 12))) {
                             cases[i][j].occupe = 20;
                             cases[i-1][j].occupe = 11;
                             cases[i+1][j].occupe = 11;
