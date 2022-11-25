@@ -317,6 +317,7 @@ int main() {
                     }
                 }
                     al_draw_filled_rectangle(200, 20, 400, 80, GRIS_FONCE);
+
                     al_draw_scaled_bitmap(clock, 0, 0, al_get_bitmap_width(clock),
                                           al_get_bitmap_height(clock), 180, 18, 60, 60, 0);
                     al_draw_textf(text, BLANC, 250, 30, 0, ": %d/%d", mois, annee);///affichage du temps
