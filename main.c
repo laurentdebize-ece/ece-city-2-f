@@ -39,20 +39,6 @@ int main() {
     virageSE = al_load_bitmap("../Routes/virageSE.png");
     virageSO = al_load_bitmap("../Routes/virageSO.png");
 
-
-
-   /* routeNS = al_load_bitmap("../Routes/routeNS.png");
-    routeOE = al_load_bitmap("../Routes/routeOE.png");
-    routeTE = al_load_bitmap("../Routes/routeTE.png");
-    routeTO = al_load_bitmap("../Routes/routeTO.png");
-    routeTS = al_load_bitmap("../Routes/routeTS.png");
-    routeTN = al_load_bitmap("../Routes/routeTN.png");
-    routeX = al_load_bitmap("../Routes/routeX.png");
-    virageNE = al_load_bitmap("../Routes/virageNE.png");
-    virageON = al_load_bitmap("../Routes/virageON.png");
-    virageSE = al_load_bitmap("../Routes/virageSE.png");
-    virageSO = al_load_bitmap("../Routes/virageSO.png"); */
-
     argent = al_load_bitmap("../Images/argent.png");
     elec = al_load_bitmap("../Images/Electricite.png");
     habitant = al_load_bitmap("../Images/people.png");
