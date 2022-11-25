@@ -1,7 +1,7 @@
 #include "routes.h"
 
 bool test(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe){
-    return (cases[i][j].occupe <= occupe);
+    return (cases[i][j].occupe == occupe);
 }
 
 
