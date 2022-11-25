@@ -4,7 +4,6 @@ bool test(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe){
     return (cases[i][j].occupe == occupe);
 }
 
-
 void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info *info, ALLEGRO_FONT *text,
                     ALLEGRO_FONT *textBold,
                     ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine,
@@ -25,8 +24,8 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
             for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                 if (isInRect(x, y, cases[i][j].x + 1, cases[i][j].y + 1,
                              cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
-                    if (test(cases, i, j, 0)) {
-                        ///ROUTES NS
+                    if (test(cases, i, j, 0)) {///on effectue tous les tests pour savoir quelle bitmap on utiliseras
+                        ///ROUTES NS /// les tests permettent de savoir ou sont les routes autour du point on l'on veut posé
                         if (test(cases, i-1, j, 0) && test(cases, i+1, j, 0) && test(cases, i, j-1, 0) && test(cases, i, j+1, 0)){
                             cases[i][j].occupe = 10;
                         }

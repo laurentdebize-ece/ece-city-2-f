@@ -1,17 +1,17 @@
 #include "menu.h"
 
-void initRessources(Info info){
+void initRessources(Info info){///initialisation des ressources
     info.argent = 500000;
     info.nbhabitant = 0;
     info.elec = 0;
     info.eau = 0;
 }
 
-bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {
+bool isInRect(int x, int y, int x1, int y1, int x2, int y2) {///permet de verifier la position de la souris lors d'un clique
     return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
 }
 
-void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
+void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {///pour dessiner le plateau avec les cases
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
         for (j = 0; j < NB_COLONNES_MAX; j++) {
@@ -25,8 +25,8 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     }
 }
 
-void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
-    for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]){///cette fonction permet de comparer si il y a eu un changement entre 2 instants
+    for (int i = 0; i < NB_LIGNES_MAX; ++i) {                       ///et de savoir si il faut tout redessiner
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             preCases[i][j].occupe = 0;
             preCases[i][j].niveau = 9;
@@ -139,9 +139,9 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
                  ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO){
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-            switch (cases[i][j].occupe){
+            switch (cases[i][j].occupe){///chaque cas correspond a un chiffre, quand on veut construire un batiment, on enregistre un chiffre correspondant dans la case et on peut le dessiner
                 case 2 :
-                    switch (cases[i][j].niveau){
+                    switch (cases[i][j].niveau){///on sait qu'on doit dessiner une maison, on verifie le niveau pour savoir qu'elle bitmap utiliser
                         case 1 : {
                             al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                                   al_get_bitmap_height(cabane),
@@ -187,8 +187,8 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
                                           cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
                     break;
                 }
-                case 10 : {
-                    al_draw_bitmap(routeOE, cases[i][j].x, cases[i][j].y, 0);
+                case 10 : {///tous ces cas correspondent au different cas de route, il y a les virages dans toutes les directions et les croisement
+                    al_draw_bitmap(routeOE, cases[i][j].x, cases[i][j].y, 0);///chaque cas correspond a une bitmap qui s'adaptent a la condition des routes qui sont autour
                     break;
                 }
                 case 11 : {
@@ -236,7 +236,7 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
     }
 }
 
-void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){///dessiner le niveau -1
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             if (cases[i][j].occupe == 1){
@@ -248,7 +248,7 @@ void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
     }
 }
 
-void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){///dessiner le niveau -2
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             if (cases[i][j].occupe == 1){

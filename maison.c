@@ -5,7 +5,7 @@ void dessinerMaisons(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], In
                      ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
                      ALLEGRO_BITMAP *usine,
                      ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne, ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent,
-                     ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
+                     ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec){
     assert (al_init());
     assert(al_init_primitives_addon());
     assert(al_install_mouse());
@@ -21,7 +21,8 @@ void dessinerMaisons(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], In
             for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                 if (isInRect(x, y, cases[i][j].x + 1, cases[i][j].y + 1,
                              cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
-                    if (accesConstructionMaison(cases, i, j) && info->argent >= nbMaisonsPosees * 1000 && info->elec - 10 >= 0 && info -> eau - 10 >= 0) {
+                    if (accesConstructionMaison(cases, i, j) && info->argent >= nbMaisonsPosees * 1000 &&
+                        info->elec - 10 >= 0 && info->eau - 10 >= 0) {
                         cases[i][j - 1].occupe = 9;
                         cases[i - 1][j - 1].occupe = 9;
                         cases[i - 2][j - 1].occupe = 9;

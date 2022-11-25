@@ -25,19 +25,19 @@
 #define GRIS_TRANSPARENT al_map_rgba(50, 50, 50, 50)
 
 
-typedef struct {
+typedef struct {///stockage des données concernant les ressources
     int argent;
     int elec;
     int eau;
     int nbhabitant;
 } Info;
 
-typedef struct {
+typedef struct {///stockage des données concernant les cases
     int x, y, largeur, hauteur;
-    int occupe;
+    int occupe; ///si la case est occupe par une route, une maison, un chateau d'eau ou une usine le chiffre change
     ALLEGRO_COLOR couleur;
     int niveau;
-    int temps;
+    int temps;///gere les cycles d'amelioration de chacun des batiments
     int consoeau;
     int consoelec;
 } Case;
