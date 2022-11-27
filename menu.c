@@ -124,6 +124,7 @@ void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *
 }
 
 
+
 void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     int i, j;
     for (i = 0; i < NB_LIGNES_MAX; i++) {
