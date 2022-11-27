@@ -2,7 +2,9 @@
 #define ECE_CITY_2_F_ROUTES_H
 #include "menu.h"
 
-bool test(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe);
+bool testInf(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe);
+bool testEgale(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j, int occupe);
+
 
 void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info* info, ALLEGRO_FONT *text,
                     ALLEGRO_FONT *textBold, ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane,

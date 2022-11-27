@@ -7,6 +7,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #define NB_LIGNES_MAX 35
 #define NB_COLONNES_MAX 45
@@ -25,6 +26,39 @@
 #define GRIS_TRANSPARENT al_map_rgba(50, 50, 50, 50)
 
 
+struct Arete{
+    int s1, s2;
+    int sommet;
+    struct Arete* arete_suivante;
+};
+
+typedef struct Arete* pArete;
+
+struct Sommet {
+    struct Arete* arete;
+    int pred;
+};
+
+typedef struct Sommet* pSommet;
+
+typedef struct Graphe{
+    pSommet* pSommet;
+}Graphe;
+
+struct _cellule {
+    int element;
+    struct _cellule *suivant;
+};
+
+typedef struct _cellule* Cellule;
+struct file {
+    int longueur;
+    Cellule tete;
+    Cellule queue;
+};
+
+typedef struct file* File;
+
 typedef struct {
     int argent;
     int elec;
@@ -38,8 +72,14 @@ typedef struct {
     ALLEGRO_COLOR couleur;
     int niveau;
     int temps;
-    int consoeau;
-    int consoelec;
+
+    int routeTDG;
+    int sommetAdjN;
+    int sommetAdjS;
+    int sommetAdjO;
+    int sommetAdjE;
+    int sommet;
+    bool decouvert;
 } Case;
 
 typedef struct {
@@ -64,7 +104,7 @@ void menud(ALLEGRO_BITMAP *fond);
 void plateau(ALLEGRO_BITMAP *fplateau);
 void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP * maison, ALLEGRO_BITMAP* immeuble, ALLEGRO_BITMAP* gratteciel, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine,ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE, ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX, ALLEGRO_BITMAP *virageNE,
                  ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO);
-void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
-void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]);
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* watercastle);
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* usine);
 
 #endif //ECE_CITY_2_F_MENU_H

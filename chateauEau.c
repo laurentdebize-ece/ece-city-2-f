@@ -22,35 +22,35 @@ void dessinerChateauEau(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX],
                 if (isInRect(x, y, cases[i][j].x + 1, cases[i][j].y + 1,
                              cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
                     if (accesConstructionUsineChateau(cases, i, j) && info->argent >= nbChateauxPoses * 100000) {
-                        cases[i - 5][j - 2].occupe = 9;
-                        cases[i - 5][j - 1].occupe = 9;
-                        cases[i - 5][j].occupe = 9;
-                        cases[i - 5][j + 1].occupe = 9;
+                        cases[i - 5][j - 2].occupe = 5;
+                        cases[i - 5][j - 1].occupe = 5;
+                        cases[i - 5][j].occupe = 5;
+                        cases[i - 5][j + 1].occupe = 5;
 
-                        cases[i - 4][j - 2].occupe = 9;
-                        cases[i - 4][j - 1].occupe = 9;
-                        cases[i - 4][j].occupe = 9;
-                        cases[i - 4][j + 1].occupe = 9;
+                        cases[i - 4][j - 2].occupe = 5;
+                        cases[i - 4][j - 1].occupe = 5;
+                        cases[i - 4][j].occupe = 5;
+                        cases[i - 4][j + 1].occupe = 5;
 
-                        cases[i - 3][j - 2].occupe = 9;
-                        cases[i - 3][j - 1].occupe = 9;
-                        cases[i - 3][j].occupe = 9;
-                        cases[i - 3][j + 1].occupe = 9;
+                        cases[i - 3][j - 2].occupe = 5;
+                        cases[i - 3][j - 1].occupe = 5;
+                        cases[i - 3][j].occupe = 5;
+                        cases[i - 3][j + 1].occupe = 5;
 
-                        cases[i - 2][j - 2].occupe = 9;
-                        cases[i - 2][j - 1].occupe = 9;
-                        cases[i - 2][j].occupe = 9;
-                        cases[i - 2][j + 1].occupe = 9;
+                        cases[i - 2][j - 2].occupe = 5;
+                        cases[i - 2][j - 1].occupe = 5;
+                        cases[i - 2][j].occupe = 5;
+                        cases[i - 2][j + 1].occupe = 5;
 
-                        cases[i - 1][j - 2].occupe = 9;
-                        cases[i - 1][j - 1].occupe = 9;
-                        cases[i - 1][j].occupe = 9;
-                        cases[i - 1][j + 1].occupe = 9;
+                        cases[i - 1][j - 2].occupe = 5;
+                        cases[i - 1][j - 1].occupe = 5;
+                        cases[i - 1][j].occupe = 5;
+                        cases[i - 1][j + 1].occupe = 5;
 
-                        cases[i][j - 2].occupe = 9;
-                        cases[i][j - 1].occupe = 9;
-                        cases[i][j].occupe = 3;
-                        cases[i][j + 1].occupe = 9;
+                        cases[i][j - 2].occupe = 5;
+                        cases[i][j - 1].occupe = 5;
+                        cases[i][j].occupe = 4;
+                        cases[i][j + 1].occupe = 5;
 
                         info->argent -= 100000;
                         info->eau += 5000;

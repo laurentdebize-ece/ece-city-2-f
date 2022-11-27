@@ -1,6 +1,6 @@
 #include "menu.h"
 
-void initRessources(Info info){
+void initRessources(Info info) {
     info.argent = 500000;
     info.nbhabitant = 0;
     info.elec = 0;
@@ -21,11 +21,17 @@ void initCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
             cases[i][j].y = 145 + i * cases[i][j].hauteur;
             cases[i][j].occupe = 0;
             cases[i][j].niveau = 9;
+            cases[i][j].sommetAdjN = 0;
+            cases[i][j].sommetAdjS = 0;
+            cases[i][j].sommetAdjO = 0;
+            cases[i][j].sommetAdjE = 0;
+            cases[i][j].sommet = 0;
+            cases[i][j].decouvert = false;
         }
     }
 }
 
-void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             preCases[i][j].occupe = 0;
@@ -34,22 +40,29 @@ void initPreCases(preCase preCases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
     }
 }
 
-bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
-    return (cases[i][j-2].occupe == 0 && cases[i][j-1].occupe == 0 && cases[i][j].occupe == 0 && cases[i][j+1].occupe == 0 &&
-            cases[i-1][j-2].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-1][j+1].occupe == 0 &&
-            cases[i-2][j-2].occupe == 0 && cases[i-2][j-1].occupe == 0 && cases[i-2][j].occupe == 0 && cases[i-2][j+1].occupe == 0 &&
-            cases[i-3][j-2].occupe == 0 && cases[i-3][j-1].occupe == 0 && cases[i-3][j].occupe == 0 && cases[i-3][j+1].occupe == 0 &&
-            cases[i-4][j-2].occupe == 0 && cases[i-4][j-1].occupe == 0 && cases[i-4][j].occupe == 0 && cases[i-4][j+1].occupe == 0 &&
-            cases[i-5][j-2].occupe == 0 && cases[i-5][j-1].occupe == 0 && cases[i-5][j].occupe == 0 && cases[i-5][j+1].occupe == 0);
+bool accesConstructionUsineChateau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j) {
+    return (cases[i][j - 2].occupe == 0 && cases[i][j - 1].occupe == 0 && cases[i][j].occupe == 0 &&
+            cases[i][j + 1].occupe == 0 &&
+            cases[i - 1][j - 2].occupe == 0 && cases[i - 1][j - 1].occupe == 0 && cases[i - 1][j].occupe == 0 &&
+            cases[i - 1][j + 1].occupe == 0 &&
+            cases[i - 2][j - 2].occupe == 0 && cases[i - 2][j - 1].occupe == 0 && cases[i - 2][j].occupe == 0 &&
+            cases[i - 2][j + 1].occupe == 0 &&
+            cases[i - 3][j - 2].occupe == 0 && cases[i - 3][j - 1].occupe == 0 && cases[i - 3][j].occupe == 0 &&
+            cases[i - 3][j + 1].occupe == 0 &&
+            cases[i - 4][j - 2].occupe == 0 && cases[i - 4][j - 1].occupe == 0 && cases[i - 4][j].occupe == 0 &&
+            cases[i - 4][j + 1].occupe == 0 &&
+            cases[i - 5][j - 2].occupe == 0 && cases[i - 5][j - 1].occupe == 0 && cases[i - 5][j].occupe == 0 &&
+            cases[i - 5][j + 1].occupe == 0);
 }
 
-bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j){
-    return (cases[i][j].occupe == 0 && cases[i-1][j].occupe == 0 && cases[i-2][j].occupe == 0 &&
-            cases[i][j-1].occupe == 0 && cases[i-1][j-1].occupe == 0 && cases[i-2][j-1].occupe == 0 &&
-            cases[i][j+1].occupe == 0 && cases[i-1][j+1].occupe == 0 && cases[i-2][j+1].occupe == 0);
+bool accesConstructionMaison(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], int i, int j) {
+    return (cases[i][j].occupe == 0 && cases[i - 1][j].occupe == 0 && cases[i - 2][j].occupe == 0 &&
+            cases[i][j - 1].occupe == 0 && cases[i - 1][j - 1].occupe == 0 && cases[i - 2][j - 1].occupe == 0 &&
+            cases[i][j + 1].occupe == 0 && cases[i - 1][j + 1].occupe == 0 && cases[i - 2][j + 1].occupe == 0);
 }
 
-void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
+void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, ALLEGRO_BITMAP *argent,
+                        ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
     al_draw_filled_rectangle(450, 0, LARGEUR_PLATEAU, 90, GRIS_FONCE);
     al_draw_filled_rectangle(600, 10, 1706, 86, GRIS_CLAIR);
     al_draw_filled_rectangle(603, 13, 1703, 83, BLANC);
@@ -67,7 +80,9 @@ void afficherRessources(Info info, ALLEGRO_FONT *text, ALLEGRO_BITMAP *water, AL
     al_draw_textf(text, BLANC, 770, 35, 0, ": %d", info.nbhabitant);
 }
 
-void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne) {
+void afficherToolBox(ALLEGRO_FONT *text, ALLEGRO_FONT *textBold, ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane,
+                     ALLEGRO_BITMAP *watercastle, ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route,
+                     ALLEGRO_BITMAP *caserne) {
 
     al_draw_filled_rectangle(0, 0, 450, HAUTEUR_PLATEAU, GRIS_FONCE);
 
@@ -135,13 +150,17 @@ void dessinerCases(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]) {
     al_flip_display();
 }
 
-void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cabane, ALLEGRO_BITMAP* maison, ALLEGRO_BITMAP* immeuble, ALLEGRO_BITMAP* gratteciel, ALLEGRO_BITMAP* watercastle, ALLEGRO_BITMAP* usine, ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE, ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX, ALLEGRO_BITMAP *virageNE,
-                 ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO){
+void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *maison,
+                 ALLEGRO_BITMAP *immeuble, ALLEGRO_BITMAP *gratteciel, ALLEGRO_BITMAP *watercastle,
+                 ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *routeOE, ALLEGRO_BITMAP *routeNS, ALLEGRO_BITMAP *routeTE,
+                 ALLEGRO_BITMAP *routeTN, ALLEGRO_BITMAP *routeTO, ALLEGRO_BITMAP *routeTS, ALLEGRO_BITMAP *routeX,
+                 ALLEGRO_BITMAP *virageNE,
+                 ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO) {
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-            switch (cases[i][j].occupe){
-                case 2 :
-                    switch (cases[i][j].niveau){
+            switch (cases[i][j].occupe) {
+                case 2 : {
+                    switch (cases[i][j].niveau) {
                         case 1 : {
                             al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                                   al_get_bitmap_height(cabane),
@@ -171,16 +190,17 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
                                                   cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
                             break;
                         }
+                    }
+                    break;
                 }
-                break;
-                case 3 : {
+                case 4 : {
                     al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
                                           al_get_bitmap_height(watercastle),
                                           cases[i][j].x - 2 * LARGEUR - 10,
                                           cases[i][j].y - 6 * HAUTEUR + 5, 130, 180, 0);
                     break;
                 }
-                case 4 : {
+                case 6 : {
                     al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine),
                                           al_get_bitmap_height(usine),
                                           cases[i][j].x - 2 * LARGEUR,
@@ -236,32 +256,44 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP* cab
     }
 }
 
-void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *watercastle) {
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-            if (cases[i][j].occupe == 1){
+            if (cases[i][j].occupe >= 10 && cases[i][j].occupe <= 20) {
                 al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
                                          cases[i][j].x + HAUTEUR - 1,
                                          cases[i][j].y + LARGEUR - 1, BLEU);
+            }
+            if (cases[i][j].occupe == 4) {
+                al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
+                                      al_get_bitmap_height(watercastle),
+                                      cases[i][j].x - 2 * LARGEUR - 10,
+                                      cases[i][j].y - 6 * HAUTEUR + 5, 130, 180, 0);
             }
         }
     }
 }
 
-void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX]){
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *usine) {
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-            if (cases[i][j].occupe == 1){
+            if (cases[i][j].occupe >= 10 && cases[i][j].occupe <= 20) {
                 al_draw_filled_rectangle(cases[i][j].x, cases[i][j].y,
                                          cases[i][j].x + HAUTEUR - 1,
                                          cases[i][j].y + LARGEUR - 1, JAUNE);
+            }
+            if (cases[i][j].occupe == 6) {
+                al_draw_scaled_bitmap(usine, 0, 0, al_get_bitmap_width(usine),
+                                      al_get_bitmap_height(usine),
+                                      cases[i][j].x - 2 * LARGEUR,
+                                      cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
             }
         }
     }
 }
 
 void raffraichir(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Info info, ALLEGRO_BITMAP *fplateau, ALLEGRO_FONT *text,
-                 ALLEGRO_FONT *textBold,ALLEGRO_BITMAP *setting,ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
+                 ALLEGRO_FONT *textBold, ALLEGRO_BITMAP *setting, ALLEGRO_BITMAP *cabane, ALLEGRO_BITMAP *watercastle,
                  ALLEGRO_BITMAP *usine, ALLEGRO_BITMAP *route, ALLEGRO_BITMAP *caserne,
                  ALLEGRO_BITMAP *eau, ALLEGRO_BITMAP *argent, ALLEGRO_BITMAP *habitant, ALLEGRO_BITMAP *elec) {
     plateau(fplateau);
