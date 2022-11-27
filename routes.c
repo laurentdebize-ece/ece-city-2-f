@@ -35,28 +35,33 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && testInf(cases, i, j - 1, 9) &&
                             testInf(cases, i, j + 1, 9)){
                             cases[i][j].occupe = 10;
+                            info->argent -= 10;
                         }
                         if (testEgale(cases, i - 1, j, 11) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i - 1, j - 1, 9) && testInf(cases, i - 1, j + 1, 9))) {
                             cases[i][j].occupe = 11;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testEgale(cases, i + 1, j, 11) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i + 1, j - 1, 9) && testInf(cases, i + 1, j + 1, 9))) {
                             cases[i][j].occupe = 11;
+                            info->argent -= 10;
                         }
                         if (testEgale(cases, i - 1, j, 10) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i - 1, j - 1, 9) && testInf(cases, i - 1, j + 1, 9))) {
                             cases[i][j].occupe = 11;
                             cases[i-1][j].occupe = 11;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testEgale(cases, i + 1, j, 10) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i + 1, j - 1, 9) && testInf(cases, i + 1, j + 1, 9))) {
                             cases[i][j].occupe = 11;
                             cases[i+1][j].occupe = 11;
+                            info->argent -= 10;
                         }
                         if (testEgale(cases, i - 1, j, 11) && testEgale(cases, i + 1, j, 11) && (testInf(cases, i, j - 1, 9) &&
                             testInf(cases, i, j + 1, 9)) && testInf(cases, i + 1, j + 1, 9) && testInf(cases, i - 1, j + 1, 9)) {
@@ -68,11 +73,13 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                                                                                            testInf(cases, i, j + 1, 9)) &&
                             testInf(cases, i - 1, j - 1, 9) && testInf(cases, i + 1, j - 1, 9)) {
                             cases[i][j].occupe = 10;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                 testEgale(cases, i, j + 1, 10)) &&
                             testInf(cases, i + 1, j + 1, 9) && testInf(cases, i - 1, j + 1, 9)) {
                             cases[i][j].occupe = 10;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testEgale(cases, i, j - 1,
                                                                                                      11) &&
@@ -80,11 +87,13 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             (testInf(cases, i - 1, j - 1, 9) && testInf(cases, i + 1, j - 1, 9))) {
                             cases[i][j].occupe = 10;
                             cases[i][j-1].occupe = 10;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                 testEgale(cases, i, j + 1, 11)) && testInf(cases, i + 1, j + 1, 9) && testInf(cases, i - 1, j + 1, 9)) {
                             cases[i][j].occupe = 10;
                             cases[i][j+1].occupe = 10;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testEgale(cases, i, j - 1, 10) &&
                             testEgale(cases, i, j + 1, 10)) && testInf(cases, i + 1, j + 1, 9) && testInf(cases, i - 1, j + 1, 9)) {
@@ -97,24 +106,28 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             (testEgale(cases, i - 1, j - 1, 10) && (testInf(cases, i + 1, j - 1, 9)))) {
                             cases[i][j].occupe = 11;
                             cases[i-1][j].occupe = 15;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testEgale(cases, i + 1, j, 10) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             testInf(cases, i - 1, j - 1, 9) && (testEgale(cases, i + 1, j - 1, 10))) {
                             cases[i][j].occupe = 11;
                             cases[i+1][j].occupe = 12;
+                            info->argent -= 10;
                         }
                         if (testEgale(cases, i - 1, j, 10) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i - 1, j - 1, 9) && testEgale(cases, i - 1, j + 1, 10))) {
                             cases[i][j].occupe = 11;
                             cases[i-1][j].occupe = 14;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testEgale(cases, i + 1, j, 10) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
                             (testInf(cases, i + 1, j - 1, 9) && testEgale(cases, i + 1, j + 1, 10))) {
                             cases[i][j].occupe = 11;
                             cases[i+1][j].occupe = 13;
+                            info->argent -= 10;
                         }
 
                         ///VIRAGES NS
@@ -124,12 +137,14 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             (testEgale(cases, i - 1, j - 1, 11) && (testInf(cases, i + 1, j - 1, 9)))) {
                             cases[i][j].occupe = 10;
                             cases[i][j-1].occupe = 13;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                 testEgale(cases, i, j + 1, 11)) &&
                             testEgale(cases, i - 1, j + 1, 11) && testInf(cases, i + 1, j + 1, 9)) {
                             cases[i][j].occupe = 10;
                             cases[i][j+1].occupe = 12;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testEgale(cases, i, j - 1,
                                                                                                      11) &&
@@ -137,12 +152,14 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             (testInf(cases, i - 1, j - 1, 9) && (testEgale(cases, i + 1, j - 1, 11)))) {
                             cases[i][j].occupe = 10;
                             cases[i][j-1].occupe = 14;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                 testEgale(cases, i, j + 1, 11)) &&
                             testInf(cases, i - 1, j + 1, 9) && testEgale(cases, i + 1, j + 1, 11)) {
                             cases[i][j].occupe = 10;
                             cases[i][j+1].occupe = 15;
+                            info->argent -= 10;
                         }
 
                         ///ROUTES T
@@ -153,6 +170,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                                                                                                           testInf(cases, i + 1, j + 1, 9)))) {
                             cases[i][j].occupe = 11;
                             cases[i-1][j].occupe = 18;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testEgale(cases, i, j - 1,
                                                                                                      11) &&
@@ -162,6 +180,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                                                                                                       testInf(cases, i + 1, j + 1, 9))) {
                             cases[i][j].occupe = 10;
                             cases[i][j-1].occupe = 19;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testEgale(cases, i + 1, j, 10) && (testInf(cases, i, j - 1, 9) &&
                                                                                               testInf(cases, i, j + 1, 9)) &&
@@ -171,6 +190,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                                                                                                     testEgale(cases, i + 1, j + 1, 10)))) {
                             cases[i][j].occupe = 11;
                             cases[i][j-1].occupe = 16;
+                            info->argent -= 10;
                         }
                         if (testInf(cases, i - 1, j, 9) && testInf(cases, i + 1, j, 9) && (testInf(cases, i, j - 1, 9) &&
                                 testEgale(cases, i, j + 1, 11)) &&
@@ -179,6 +199,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                                                                                                       testEgale(cases, i + 1, j + 1, 11))) {
                             cases[i][j].occupe = 10;
                             cases[i][j+1].occupe = 17;
+                            info->argent -= 10;
                         }
 
                         ///ROUTE X
@@ -190,6 +211,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             cases[i][j].occupe = 20;
                             cases[i-1][j].occupe = 11;
                             cases[i+1][j].occupe = 11;
+                            info->argent -= 10;
                         }
                         if (testEgale(cases, i - 1, j, 10) && testEgale(cases, i + 1, j, 10) && (testEgale(cases, i, j - 1, 11) &&
                                                                                                  testEgale(cases, i, j + 1, 11)) &&
@@ -201,6 +223,7 @@ void dessinerRoutes(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                             cases[i+1][j].occupe = 16;
                             cases[i][j-1].occupe = 19;
                             cases[i][j+1].occupe = 17;
+                            info->argent -= 10;
                         }
                     }
                 }
