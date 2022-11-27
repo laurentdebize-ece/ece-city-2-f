@@ -26,6 +26,7 @@
 #define GRIS_TRANSPARENT al_map_rgba(50, 50, 50, 50)
 
 
+
 struct Arete{
     int s1, s2;
     int sommet;
@@ -66,12 +67,13 @@ typedef struct {
     int nbhabitant;
 } Info;
 
-typedef struct {
+typedef struct {///stockage des données concernant les cases
     int x, y, largeur, hauteur;
-    int occupe;
+    int occupe; ///si la case est occupe par une route, une maison, un chateau d'eau ou une usine le chiffre change
     ALLEGRO_COLOR couleur;
     int niveau;
-    int temps;
+
+    int temps; ///gere les cycles d'amelioration de chacun des batiments
 
     int routeTDG;
     int sommetAdjN;
@@ -80,6 +82,10 @@ typedef struct {
     int sommetAdjE;
     int sommet;
     bool decouvert;
+
+
+
+
 } Case;
 
 typedef struct {
