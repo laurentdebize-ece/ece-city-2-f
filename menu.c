@@ -158,9 +158,9 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *cab
                  ALLEGRO_BITMAP *virageON, ALLEGRO_BITMAP *virageSE, ALLEGRO_BITMAP *virageSO) {
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
-            switch (cases[i][j].occupe) {
-                case 2 : {
-                    switch (cases[i][j].niveau) {
+            switch (cases[i][j].occupe) {///chaque cas correspond a un chiffre, quand on veut construire un batiment, on enregistre un chiffre correspondant dans la case et on peut le dessiner
+                case 2 :
+                    switch (cases[i][j].niveau) {///on sait qu'on doit dessiner une maison, on verifie le niveau pour savoir qu'elle bitmap utiliser
                         case 1 : {
                             al_draw_scaled_bitmap(cabane, 0, 0, al_get_bitmap_width(cabane),
                                                   al_get_bitmap_height(cabane),
@@ -190,9 +190,9 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *cab
                                                   cases[i][j].y - 2 * HAUTEUR, 75, 75, 0);
                             break;
                         }
+                            break;
                     }
-                    break;
-                }
+
                 case 4 : {
                     al_draw_scaled_bitmap(watercastle, 0, 0, al_get_bitmap_width(watercastle),
                                           al_get_bitmap_height(watercastle),
@@ -207,8 +207,9 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *cab
                                           cases[i][j].y - 5 * HAUTEUR, 100, 150, 0);
                     break;
                 }
-                case 10 : {
-                    al_draw_bitmap(routeOE, cases[i][j].x, cases[i][j].y, 0);
+                case 10 : {///tous ces cas correspondent au different cas de route, il y a les virages dans toutes les directions et les croisement
+                    al_draw_bitmap(routeOE, cases[i][j].x, cases[i][j].y,
+                                   0);///chaque cas correspond a une bitmap qui s'adaptent a la condition des routes qui sont autour
                     break;
                 }
                 case 11 : {
@@ -256,7 +257,7 @@ void dessinerBat(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *cab
     }
 }
 
-void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *watercastle) {
+void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *watercastle) { ///dessiner le niveau -1
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             if (cases[i][j].occupe >= 10 && cases[i][j].occupe <= 20) {
@@ -274,7 +275,7 @@ void dessinerEau(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *wat
     }
 }
 
-void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *usine) {
+void dessinerElec(Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], ALLEGRO_BITMAP *usine) {///dessiner le niveau -2
     for (int i = 0; i < NB_LIGNES_MAX; ++i) {
         for (int j = 0; j < NB_COLONNES_MAX; ++j) {
             if (cases[i][j].occupe >= 10 && cases[i][j].occupe <= 20) {

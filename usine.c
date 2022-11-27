@@ -15,8 +15,9 @@ void dessinerUsines(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
     int y = al_get_mouse_state_axis(&mouseState, 1);
     int nbUsinesPosees = 1;
     al_draw_circle(330, 400, 92, ROUGE, 2);
-    if (al_mouse_button_down(&mouseState, 1) == true) {
-        for (int i = 0; i < NB_LIGNES_MAX; ++i) {
+
+    if (al_mouse_button_down(&mouseState, 1) == true) {///dans le cas ou on a selectionner la construction d'une usine on determine les
+        for (int i = 0; i < NB_LIGNES_MAX; ++i) {                 ///cases dans lesquelles il faudra imprimer une usine
             for (int j = 0; j < NB_COLONNES_MAX; ++j) {
                 if (isInRect(x, y, cases[i][j].x + 1, cases[i][j].y + 1,
                              cases[i][j].x + HAUTEUR - 1, cases[i][j].y + LARGEUR - 1)) {
@@ -51,7 +52,7 @@ void dessinerUsines(int *dessin, Case cases[NB_LIGNES_MAX][NB_COLONNES_MAX], Inf
                         cases[i][j].occupe = 6;
                         cases[i][j + 1].occupe = 7;
 
-                        info->argent -= 100000;
+                        info->argent -= 100000;///on met a jour les ressources apres la construction de l'usine
                         info->elec += 5000;
                         nbUsinesPosees += 1;
                     }
